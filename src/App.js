@@ -52,7 +52,7 @@ class App extends Component {
           invData: invData,
           sillyData: sillyData
         });
-      }, 5000);
+      }, 20000);
     } catch (e) {
       console.log(e);
     }

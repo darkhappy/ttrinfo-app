@@ -16,9 +16,11 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "bootswatch": "^4.4.1",
+    "chart.js": "^2.9.3",
     "cross-env": "^7.0.0",
     "electron-is-dev": "^1.1.0",
     "react": "^16.12.0",
+    "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.4.0"
   },
