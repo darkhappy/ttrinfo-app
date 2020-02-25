@@ -3,10 +3,10 @@ import React, { Component } from "react";
 class Header extends Component {
   render() {
     return (
-      <>
-        <h1>TOONTOWN REWRITTEN INFORMATION</h1>
-        <h3 className="text-muted">BECAUSE INFORMATION IS LIT</h3>
-      </>
+      <div className="text-center py-3">
+        <h1>Toontown Rewritten Statistics</h1>
+        <h4 className="text-muted">Last updated: sometime ago lol</h4>
+      </div>
     );
   }
 }
