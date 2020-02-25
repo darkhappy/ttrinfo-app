@@ -7,8 +7,6 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1280,
     height: 720,
-    titleBarStyle: "customButtonsOnHover",
-    frame: false,
     webPreferences: {
       nodeIntegration: true
     }
