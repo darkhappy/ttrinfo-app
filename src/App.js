@@ -15,43 +15,50 @@ class App extends Component {
     sillyData: []
   };
 
+  async loadData() {
+    // define variables
+    var popData;
+    var sillyData;
+    var invData;
+
+    // start with population
+    await axios({
+      method: "get",
+      url: "https://www.toontownrewritten.com/api/population"
+    }).then(resp => {
+      popData = resp.data;
+    });
+
+    // head out to the sillymeter now
+    await axios({
+      method: "get",
+      url: "https://www.toontownrewritten.com/api/sillymeter"
+    }).then(resp => {
+      sillyData = resp.data;
+    });
+    // quick stop at the invasions
+    await axios({
+      method: "get",
+      url: "https://www.toontownrewritten.com/api/invasions"
+    }).then(resp => {
+      invData = resp.data;
+    });
+
+    // alright slap that shit in states
+    this.setState({
+      popData: popData,
+      invData: invData,
+      sillyData: sillyData
+    });
+  }
+
   async componentDidMount() {
+    // load data for the first time
+    this.loadData();
+    // now load the rest
     try {
       setInterval(async () => {
-        // define variables
-        var popData;
-        var sillyData;
-        var invData;
-
-        // start with population
-        await axios({
-          method: "get",
-          url: "https://www.toontownrewritten.com/api/population"
-        }).then(resp => {
-          popData = resp.data;
-        });
-
-        // head out to the sillymeter now
-        await axios({
-          method: "get",
-          url: "https://www.toontownrewritten.com/api/sillymeter"
-        }).then(resp => {
-          sillyData = resp.data;
-        });
-        // quick stop at the invasions
-        await axios({
-          method: "get",
-          url: "https://www.toontownrewritten.com/api/invasions"
-        }).then(resp => {
-          invData = resp.data;
-        });
-
-        // alright slap that shit in states
-        this.setState({
-          popData: popData,
-          invData: invData,
-          sillyData: sillyData
-        });
+        this.loadData();
       }, 20000);
     } catch (e) {
       console.log(e);
@@ -60,13 +67,13 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="p-3">
         <Header />
         <div className="row">
-          <div className="col-5">
+          <div className="col-4">
             <Invasions invData={this.state.invData} />
           </div>
-          <div className="col-7">
+          <div className="col-8">
             <Population popData={this.state.popData} />
           </div>
           <div className="w-100" />
