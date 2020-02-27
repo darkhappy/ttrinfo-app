@@ -117,6 +117,14 @@ class Population extends Component {
     return (
       <div>
         <h1>Current Population</h1>
+        <h4>
+          <AnimatedNumber
+            value={this.getPopulationData("total")}
+            formatValue={this.formatValue}
+            duration={this.duration}
+          />{" "}
+          total toons
+        </h4>
         <Pie
           data={this.getPopulationChartData()}
           legend={{
@@ -139,15 +147,6 @@ class Population extends Component {
             }
           }}
         />
-        <hr />
-        <h4>
-          <AnimatedNumber
-            value={this.getPopulationData("total")}
-            formatValue={this.formatValue}
-            duration={this.duration}
-          />{" "}
-          total toons
-        </h4>
       </div>
     );
   }
