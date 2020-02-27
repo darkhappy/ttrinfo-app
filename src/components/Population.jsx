@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Pie } from "react-chartjs-2";
+import { Doughnut } from "react-chartjs-2";
 import AnimatedNumber from "react-animated-number";
 
 class Population extends Component {
@@ -92,18 +92,18 @@ class Population extends Component {
         }
       ],
       labels: [
-        ["Blam Canyon: " + districts["Blam Canyon"]],
-        ["Boingbury: " + districts["Boingbury"]],
-        ["Bounceboro: " + districts["Bounceboro"]],
-        ["Fizzlefield: " + districts["Fizzlefield"]],
-        ["Gulp Gulch: " + districts["Gulp Gulch"]],
-        ["Hiccup Hills: " + districts["Hiccup Hills"]],
-        ["Kaboom Cliffs: " + districts["Kaboom Cliffs"]],
-        ["Splashport: " + districts["Splashport"]],
-        ["Splat Summit: " + districts["Splat Summit"]],
-        ["Thwackville: " + districts["Thwackville"]],
-        ["Whoosh Rapids: " + districts["Whoosh Rapids"]],
-        ["Zoink Falls: " + districts["Zoink Falls"]]
+        ["Blam Canyon: " + districts["Blam Canyon"] + " toons"],
+        ["Boingbury: " + districts["Boingbury"] + " toons"],
+        ["Bounceboro: " + districts["Bounceboro"] + " toons"],
+        ["Fizzlefield: " + districts["Fizzlefield"] + " toons"],
+        ["Gulp Gulch: " + districts["Gulp Gulch"] + " toons"],
+        ["Hiccup Hills: " + districts["Hiccup Hills"] + " toons"],
+        ["Kaboom Cliffs: " + districts["Kaboom Cliffs"] + " toons"],
+        ["Splashport: " + districts["Splashport"] + " toons"],
+        ["Splat Summit: " + districts["Splat Summit"] + " toons"],
+        ["Thwackville: " + districts["Thwackville"] + " toons"],
+        ["Whoosh Rapids: " + districts["Whoosh Rapids"] + " toons"],
+        ["Zoink Falls: " + districts["Zoink Falls"] + " toons"]
       ]
     };
 
@@ -125,17 +125,16 @@ class Population extends Component {
           />{" "}
           total toons
         </h4>
-        <Pie
+        <Doughnut
           data={this.getPopulationChartData()}
           legend={{
             position: "right",
-            align: "end",
+            align: "center",
             rtl: true,
             labels: {
               boxWidth: 20
             }
           }}
-          height={80}
           options={{
             tooltips: {
               mode: "nearest",

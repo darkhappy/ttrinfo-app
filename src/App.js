@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import "bootswatch/dist/united/bootstrap.min.css";
 import axios from "axios";
+import { Button } from "react-bootstrap";
 
 import Population from "./components/Population.jsx";
-import Header from "./components/Header.jsx";
 import Invasions from "./components/Invasions.jsx";
 import ServerStatus from "./components/ServerStatus.jsx";
 import SillyMeter from "./components/SillyMeter.jsx";
@@ -13,7 +12,8 @@ class App extends Component {
     invData: [],
     popData: [],
     sillyData: [],
-    lastUpdate: "Never"
+    lastUpdate: "Updating...",
+    mode: "Light"
   };
 
   loadData = async () => {
@@ -21,6 +21,11 @@ class App extends Component {
     var popData;
     var sillyData;
     var invData;
+
+    // tell the boys that we are updating
+    this.setState({
+      lastUpdate: "Updating..."
+    });
 
     // start with population
     await axios({
@@ -53,7 +58,7 @@ class App extends Component {
       invData: invData,
       sillyData: sillyData,
       // also update the current time
-      lastUpdate: time.toLocaleTimeString()
+      lastUpdate: "Last updated: " + time.toLocaleTimeString()
     });
   };
 
@@ -72,24 +77,30 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Header lastUpdate={this.state.lastUpdate} refresh={this.loadData} />
-        <div className="px-5 py-3">
-          <div className="row">
-            <div className="col-4 text-left">
-              <Invasions invData={this.state.invData} />
-            </div>
-            <div className="col-8 text-right">
-              <Population popData={this.state.popData} />
-            </div>
-            <div className="w-100 py-3" />
-            <div className="col-4 text-left">
-              <ServerStatus />
-            </div>
-            <div className="col-8 text-right">
-              <SillyMeter sillyData={this.state.sillyData} />
-            </div>
+      <div className="container py-2">
+        <div className="row">
+          <div className="col-5 text-left">
+            <Invasions invData={this.state.invData} />
           </div>
+          <div className="col-7 text-right">
+            <Population popData={this.state.popData} />
+          </div>
+        </div>
+        <br />
+        <br />
+        <div className="row">
+          <div className="col-8 text-left">
+            <SillyMeter sillyData={this.state.sillyData} />
+          </div>
+          <div className="col-4 text-right">
+            <ServerStatus />
+          </div>
+        </div>
+
+        <div className="fixed-bottom text-center text-muted py-3">
+          <Button variant="outline-info" size="sm" onClick={this.loadData}>
+            {this.state.lastUpdate} | Version 1.00
+          </Button>
         </div>
       </div>
     );

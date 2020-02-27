@@ -17,9 +17,9 @@ class SillyMeter extends Component {
 
     return (
       sillyData.rewards[0] +
-      ", " +
+      "\n" +
       sillyData.rewards[1] +
-      " & " +
+      "\n" +
       sillyData.rewards[2]
     );
   }
@@ -100,13 +100,13 @@ class SillyMeter extends Component {
   render() {
     return (
       <div>
-        <h1>
-          Silly Meter{" "}
+        <h1>Silly Meter</h1>
+        <h5>
           <span className={this.getStatus("status")}>
             {this.getStatus("text")} {this.getPercentage()}%
-          </span>
-        </h1>
-        {this.getDate()}
+          </span>{" "}
+          {this.getDate()}
+        </h5>
         <Line percent={this.getPercentage()} strokeColor={this.getColour()} />
         <br />
         {this.getTeams()}

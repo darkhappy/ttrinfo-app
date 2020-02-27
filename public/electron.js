@@ -7,15 +7,16 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1280,
     height: 720,
-    minWidth: 1280,
-    minHeight: 720,
-    frame: false,
+    resizable: false,
     webPreferences: {
       nodeIntegration: true
     },
     // Hide the titlebar from MacOS applications while keeping the stop lights
     titleBarStyle: "hidden" // or 'customButtonsOnHover',
   });
+
+  // remove the shitty menu
+  win.setMenu(null);
 
   // and load the index.html of the app.
   win.loadURL(
