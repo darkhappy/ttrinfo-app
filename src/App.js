@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import "bootswatch/dist/united/bootstrap.min.css";
 import axios from "axios";
 
-import TitleBar from "frameless-titlebar";
-
 import Population from "./components/Population.jsx";
 import Header from "./components/Header.jsx";
 import Invasions from "./components/Invasions.jsx";
@@ -18,7 +16,7 @@ class App extends Component {
     lastUpdate: "Never"
   };
 
-  async loadData() {
+  loadData = async () => {
     // define variables
     var popData;
     var sillyData;
@@ -57,7 +55,7 @@ class App extends Component {
       // also update the current time
       lastUpdate: time.toLocaleTimeString()
     });
-  }
+  };
 
   async componentDidMount() {
     // load data for the first time
@@ -75,18 +73,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <TitleBar
-          app="Toontown Rewritten Statistics"
-          theme={{
-            barTheme: "dark",
-            barBackgroundColor: "rgb(36, 37, 38)",
-            barColor: "rgb(230, 230, 230)",
-            menuHighlightColor: "#373277",
-            menuDimItems: false,
-            showIconDarwin: false
-          }}
-        />
-        <Header lastUpdate={this.state.lastUpdate} />
+        <Header lastUpdate={this.state.lastUpdate} refresh={this.loadData} />
         <div className="px-5 py-3">
           <div className="row">
             <div className="col-4 text-left">

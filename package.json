@@ -23,6 +23,7 @@
     "rc-progress": "^2.5.2",
     "react": "^16.12.0",
     "react-animated-number": "^0.4.4",
+    "react-bootstrap": "^1.0.0-beta.16",
     "react-chartjs-2": "^2.9.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.4.0"
