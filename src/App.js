@@ -76,17 +76,17 @@ class App extends Component {
         <Header lastUpdate={this.state.lastUpdate} />
         <div className="px-5 py-3">
           <div className="row">
-            <div className="col-4">
+            <div className="col-4 text-left">
               <Invasions invData={this.state.invData} />
             </div>
-            <div className="col-8">
+            <div className="col-8 text-right">
               <Population popData={this.state.popData} />
             </div>
-            <div className="w-100" />
-            <div className="col-4">
+            <div className="w-100 py-3" />
+            <div className="col-4 text-left">
               <ServerStatus />
             </div>
-            <div className="col-8">
+            <div className="col-8 text-right">
               <SillyMeter sillyData={this.state.sillyData} />
             </div>
           </div>
