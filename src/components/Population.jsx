@@ -120,14 +120,24 @@ class Population extends Component {
         <Pie
           data={this.getPopulationChartData()}
           legend={{
-            display: true,
             position: "right",
             align: "end",
+            rtl: true,
             labels: {
               boxWidth: 20
             }
           }}
           height={80}
+          options={{
+            tooltips: {
+              mode: "nearest",
+              callbacks: {
+                label: function(tooltipItem, data) {
+                  return " " + data.labels[tooltipItem.index];
+                }
+              }
+            }
+          }}
         />
         <hr />
         <h4>
