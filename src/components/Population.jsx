@@ -50,6 +50,20 @@ class Population extends Component {
             data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             backgroundColor: colours
           }
+        ],
+        labels: [
+          ["Blam Canyon"],
+          ["Boingbury"],
+          ["Bounceboro"],
+          ["Fizzlefield"],
+          ["Gulp Gulch"],
+          ["Hiccup Hills"],
+          ["Kaboom Cliffs"],
+          ["Splashport"],
+          ["Splat Summit"],
+          ["Thwackville"],
+          ["Whoosh Rapids"],
+          ["Zoink Falls"]
         ]
       };
       // now return that
@@ -57,26 +71,6 @@ class Population extends Component {
     }
 
     // well something exists, so send that
-
-    // conditional formating, currently disabled
-    /* const colour = function(district) {
-      const distColour =
-        districts[district] >= 500
-          ? "#ffab91" // full
-          : districts[district] >= 450
-          ? "#ffcc80 " // almost full
-          : districts[district] >= 400
-          ? "#fff59d" // quite a lot
-          : districts[district] >= 300
-          ? "#e6ee9c" // ideal
-          : districts[district] >= 200
-          ? "#c5e1a5 " // slightly less ideal
-          : districts[district] >= 0
-          ? "#424242" // quiet
-          : "#7b1fa2 "; // error (doesn't exist)
-      return distColour;
-    }; */
-
     const data = {
       datasets: [
         {
@@ -94,36 +88,22 @@ class Population extends Component {
             districts["Whoosh Rapids"],
             districts["Zoink Falls"]
           ],
-          backgroundColor:
-            // conditional formatting, currently idsabled
-            /*             colour("Blam Canyon"),
-            colour("Boingbury"),
-            colour("Bounceboro"),
-            colour("Fizzlefield"),
-            colour("Gulp Gulch"),
-            colour("Hiccup Hills"),
-            colour("Kaboom Cliffs"),
-            colour("Splashport"),
-            colour("Splat Summit"),
-            colour("Thwackville"),
-            colour("Whoosh Rapids"),
-            colour("Zoink Falls") */
-            colours
+          backgroundColor: colours
         }
       ],
       labels: [
-        ["Blam Canyon"],
-        ["Boingbury"],
-        ["Bounceboro"],
-        ["Fizzlefield"],
-        ["Gulp Gulch"],
-        ["Hiccup Hills"],
-        ["Kaboom Cliffs"],
-        ["Splashport"],
-        ["Splat Summit"],
-        ["Thwackville"],
-        ["Whoosh Rapids"],
-        ["Zoink Falls"]
+        ["Blam Canyon: " + districts["Blam Canyon"]],
+        ["Boingbury: " + districts["Boingbury"]],
+        ["Bounceboro: " + districts["Bounceboro"]],
+        ["Fizzlefield: " + districts["Fizzlefield"]],
+        ["Gulp Gulch: " + districts["Gulp Gulch"]],
+        ["Hiccup Hills: " + districts["Hiccup Hills"]],
+        ["Kaboom Cliffs: " + districts["Kaboom Cliffs"]],
+        ["Splashport: " + districts["Splashport"]],
+        ["Splat Summit: " + districts["Splat Summit"]],
+        ["Thwackville: " + districts["Thwackville"]],
+        ["Whoosh Rapids: " + districts["Whoosh Rapids"]],
+        ["Zoink Falls: " + districts["Zoink Falls"]]
       ]
     };
 
@@ -136,166 +116,28 @@ class Population extends Component {
   render() {
     return (
       <div>
-        <h1 className="text-center">Current Population</h1>
-        <div className="row">
-          <div className="col-8">
-            <hr />
-            <Pie
-              data={this.getPopulationChartData()}
-              legend={{
-                display: true,
-                position: "right"
-              }}
-            />
-            <hr />
-            <h4 className="text-center">
-              <AnimatedNumber
-                value={this.getPopulationData("total")}
-                formatValue={this.formatValue}
-                duration={this.duration}
-              />{" "}
-              total toons
-            </h4>
-          </div>
-          <div className="col-4">
-            <table className="table table-borderless">
-              <thead className="thead-light">
-                <tr>
-                  <th>District</th>
-                  <th>Population</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Blam Canyon</td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Blam Canyon")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Boingbury</td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Boingbury")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Bounceboro</td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Bounceboro")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Fizzlefield</td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Fizzlefield")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Gulp Gulch{" "}
-                    <span className="badge badge-success">Speedchat</span>
-                  </td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Gulp Gulch")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Hiccup Hills</td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Hiccup Hills")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Kaboom Cliffs</td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Kaboom Cliffs")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Splashport</td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Splashport")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Splat Summit</td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Splat Summit")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Thwackville</td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Thwackville")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    Whoosh Rapids{" "}
-                    <span className="badge badge-success">Speedchat</span>
-                  </td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Whoosh Rapids")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Zoink Falls</td>
-                  <td>
-                    <AnimatedNumber
-                      value={this.getPopulationData("Zoink Falls")}
-                      formatValue={this.formatValue}
-                      duration={this.duration}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <h1 className="text-right">Current Population</h1>
+        <Pie
+          data={this.getPopulationChartData()}
+          legend={{
+            display: true,
+            position: "right",
+            align: "end",
+            labels: {
+              boxWidth: 20
+            }
+          }}
+          height={80}
+        />
+        <hr />
+        <h4 className="text-right">
+          <AnimatedNumber
+            value={this.getPopulationData("total")}
+            formatValue={this.formatValue}
+            duration={this.duration}
+          />{" "}
+          total toons
+        </h4>
       </div>
     );
   }

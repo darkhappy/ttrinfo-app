@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "bootswatch/dist/darkly/bootstrap.min.css";
+import "bootswatch/dist/united/bootstrap.min.css";
 import axios from "axios";
 
 import Population from "./components/Population.jsx";
@@ -12,7 +12,8 @@ class App extends Component {
   state = {
     invData: [],
     popData: [],
-    sillyData: []
+    sillyData: [],
+    lastUpdate: "Never"
   };
 
   async loadData() {
@@ -44,11 +45,15 @@ class App extends Component {
       invData = resp.data;
     });
 
+    const time = new Date();
+
     // alright slap that shit in states
     this.setState({
       popData: popData,
       invData: invData,
-      sillyData: sillyData
+      sillyData: sillyData,
+      // also update the current time
+      lastUpdate: time.toLocaleTimeString()
     });
   }
 
@@ -59,7 +64,7 @@ class App extends Component {
     try {
       setInterval(async () => {
         this.loadData();
-      }, 20000);
+      }, 30000);
     } catch (e) {
       console.log(e);
     }
@@ -67,21 +72,23 @@ class App extends Component {
 
   render() {
     return (
-      <div className="p-3">
-        <Header />
-        <div className="row">
-          <div className="col-4">
-            <Invasions invData={this.state.invData} />
-          </div>
-          <div className="col-8">
-            <Population popData={this.state.popData} />
-          </div>
-          <div className="w-100" />
-          <div className="col-8">
-            <SillyMeter sillyData={this.state.sillyData} />
-          </div>
-          <div className="col-4">
-            <ServerStatus />
+      <div>
+        <Header lastUpdate={this.state.lastUpdate} />
+        <div className="px-5 py-3">
+          <div className="row">
+            <div className="col-4">
+              <Invasions invData={this.state.invData} />
+            </div>
+            <div className="col-8">
+              <Population popData={this.state.popData} />
+            </div>
+            <div className="w-100" />
+            <div className="col-4">
+              <ServerStatus />
+            </div>
+            <div className="col-8">
+              <SillyMeter sillyData={this.state.sillyData} />
+            </div>
           </div>
         </div>
       </div>
