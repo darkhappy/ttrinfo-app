@@ -4,8 +4,8 @@ class ServerStatus extends Component {
   render() {
     return (
       <>
-        <h1>THE SERVERS</h1>
-        <p>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>
+        <h1>Servers</h1>
+        <p>Table containing server latency.</p>
       </>
     );
   }
