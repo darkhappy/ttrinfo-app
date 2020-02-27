@@ -45,7 +45,7 @@ class App extends Component {
     // quick stop at the invasions
     await axios({
       method: "get",
-      url: "https://www.toontownrewritten.com/api/invasions"
+      url: "https://api.toon.plus/invasions/"
     }).then(resp => {
       invData = resp.data;
     });
