@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Line } from "rc-progress";
+import AnimatedNumber from "react-animated-number/build/AnimatedNumber";
 
 class SillyMeter extends Component {
   getTeams() {
@@ -12,15 +13,17 @@ class SillyMeter extends Component {
 
     // if there's a winner, return the winner instead
     if (sillyData.winner !== null) {
-      return "Reward: " + sillyData.winner;
+      return <h5>{sillyData.winner}</h5>;
     }
 
     return (
-      sillyData.rewards[0] +
-      "\n" +
-      sillyData.rewards[1] +
-      "\n" +
-      sillyData.rewards[2]
+      <p>
+        {sillyData.rewards[0]}
+        <br />
+        {sillyData.rewards[1]}
+        <br />
+        {sillyData.rewards[2]}
+      </p>
     );
   }
 
@@ -97,13 +100,22 @@ class SillyMeter extends Component {
     return Math.floor(hp / 50000);
   }
 
+  formatValue = value => value.toFixed(0);
+  duration = 500;
+
   render() {
     return (
       <div>
         <h1>Silly Meter</h1>
         <h5>
           <span className={this.getStatus("status")}>
-            {this.getStatus("text")} {this.getPercentage()}%
+            {this.getStatus("text")}{" "}
+            <AnimatedNumber
+              value={this.getPercentage()}
+              formatValue={this.formatValue}
+              duration={this.duration}
+            />
+            %
           </span>{" "}
           {this.getDate()}
         </h5>

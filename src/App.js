@@ -4,7 +4,6 @@ import { Button } from "react-bootstrap";
 
 import Population from "./components/Population.jsx";
 import Invasions from "./components/Invasions.jsx";
-import ServerStatus from "./components/ServerStatus.jsx";
 import SillyMeter from "./components/SillyMeter.jsx";
 
 class App extends Component {
@@ -84,22 +83,13 @@ class App extends Component {
           </div>
           <div className="col-7 text-right">
             <Population popData={this.state.popData} />
-          </div>
-        </div>
-        <br />
-        <br />
-        <div className="row">
-          <div className="col-8 text-left">
+            <hr />
             <SillyMeter sillyData={this.state.sillyData} />
           </div>
-          <div className="col-4 text-right">
-            <ServerStatus />
-          </div>
         </div>
-
         <div className="fixed-bottom text-center text-muted py-3">
           <Button variant="outline-info" size="sm" onClick={this.loadData}>
-            {this.state.lastUpdate} | Version 1.00
+            {this.state.lastUpdate}
           </Button>
         </div>
       </div>

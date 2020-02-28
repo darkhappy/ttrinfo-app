@@ -1,7 +1,14 @@
 import React, { Component } from "react";
 import { Circle } from "rc-progress";
+import AnimatedNumber from "react-animated-number/build/AnimatedNumber";
 
 function Districts(props) {
+  const formatValue = value => value.toFixed(0);
+  const duration = 800;
+
+  if (props.data === null) {
+    return "Loading invasions";
+  }
   return (
     <ul className="list-group list-group-flush">
       {props.data.map(item => (
@@ -21,7 +28,17 @@ function Districts(props) {
               />
             </div>
             <div className="col-2 text-right">
-              <span className="">{item.progress}</span>
+              <AnimatedNumber
+                value={item.progress}
+                formatValue={formatValue}
+                duration={duration}
+              />
+              /
+              <AnimatedNumber
+                value={item.max}
+                formatValue={formatValue}
+                duration={duration}
+              />
             </div>
           </div>
         </li>
@@ -47,26 +64,26 @@ class Invasions extends Component {
       console.log(invasion);
       // variables
       const invDate = new Date(invasion[1].FirstSeen).toLocaleTimeString();
-      const progress =
-        invasion[1].CurrentProgress + "/" + invasion[1].MaxProgress;
       const percent = Math.floor(
         (invasion[1].CurrentProgress / invasion[1].MaxProgress) * 100
       );
-
       const invColour =
         percent >= 90
           ? "#ff5722" // 90-100% done
           : percent >= 75
           ? "#ff9800" // 75-90% done
           : percent >= 50
-          ? "#ffeb3b" // 50-75% done
+          ? "#ffc107" // 50-75% done
           : "4caf50"; // 0-50% done
+
+      const invCog = invasion[1].Type.replace(/[^-.()0-9a-z& ]/gi, "") + "s";
 
       data.push({
         district: invasion[1].District,
-        cog: invasion[1].Type + "s",
+        cog: invCog,
         started: invDate,
-        progress: progress,
+        progress: invasion[1].CurrentProgress,
+        max: invasion[1].MaxProgress,
         percent: percent,
         colour: invColour
       });
