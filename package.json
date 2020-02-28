@@ -1,7 +1,7 @@
 {
   "name": "ttrinfo-app",
   "version": "0.1.0",
-  "description": "Toontown Rewritten Information",
+  "description": "Toontown Rewritten Information Dashboard",
   "author": "darkhappy",
   "main": "public/electron.js",
   "build": {
