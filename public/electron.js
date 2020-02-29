@@ -10,9 +10,7 @@ function createWindow() {
     resizable: false,
     webPreferences: {
       nodeIntegration: true
-    },
-    // Hide the titlebar from MacOS applications while keeping the stop lights
-    titleBarStyle: "hidden" // or 'customButtonsOnHover',
+    }
   });
 
   // remove the shitty menu
