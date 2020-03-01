@@ -76,7 +76,7 @@ class Invasions extends Component {
           ? "#ffc107" // 50-75% done
           : "4caf50"; // 0-50% done
 
-      const invCog = invasion[1].Type.replace(/[^-.()0-9a-z& ]/gi, "") + "s";
+      const invCog = invasion[1].Type.replace(/[^-.()0-9a-z& ]/gi, "");
 
       data.push({
         district: invasion[1].District,
