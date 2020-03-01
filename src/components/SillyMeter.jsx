@@ -16,6 +16,19 @@ class SillyMeter extends Component {
       return <h5>{sillyData.winner}</h5>;
     }
 
+    // if it's inactive, show "upcoming teams"
+    if (sillyData.state === "Inactive") {
+      return (
+        <p className="text-muted">
+          Upcoming teams: {sillyData.rewards[0]}
+          <br />
+          {sillyData.rewards[1]}
+          <br />
+          {sillyData.rewards[2]}
+        </p>
+      );
+    }
+
     return (
       <p>
         {sillyData.rewards[0]}
@@ -42,9 +55,9 @@ class SillyMeter extends Component {
     if (sillyData.state === "Active") {
       return "Updating at " + date.toLocaleTimeString();
     } else if (sillyData.state === "Reward") {
-      return "Boosting until " + date.toLocaleTimeString();
+      return "Boosting until " + date.toLocaleString();
     } else {
-      return "Cooling down until " + date.toLocaleTimeString();
+      return "Cooling down until " + date.toLocaleString();
     }
   }
 
