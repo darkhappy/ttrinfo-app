@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Button } from "react-bootstrap";
 
-import Population from "./components/Population.jsx";
-import Invasions from "./components/Invasions.jsx";
-import SillyMeter from "./components/SillyMeter.jsx";
+// import Population from "./components/Population.jsx";
+// import Invasions from "./components/Invasions.jsx";
+// import SillyMeter from "./components/SillyMeter.jsx";
+import All from "./components/All.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 class App extends Component {
   state = {
@@ -12,7 +13,8 @@ class App extends Component {
     popData: [],
     sillyData: [],
     lastUpdate: "Updating...",
-    mode: "Light"
+    mode: "Light",
+    version: "v0.2-beta"
   };
 
   loadData = async () => {
@@ -76,22 +78,19 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container py-2">
-        <div className="row">
-          <div className="col-5 text-left">
-            <Invasions invData={this.state.invData} />
-          </div>
-          <div className="col-7 text-right">
-            <Population popData={this.state.popData} />
-            <hr />
-            <SillyMeter sillyData={this.state.sillyData} />
-          </div>
+      <div className="app">
+        <div className="container py-2">
+          <All
+            invData={this.state.invData}
+            popData={this.state.popData}
+            sillyData={this.state.sillyData}
+          />
         </div>
-        <div className="fixed-bottom text-center text-muted py-3">
-          <Button variant="outline-info" size="sm" onClick={this.loadData}>
-            {this.state.lastUpdate}
-          </Button>
-        </div>
+        <Navbar
+          refresh={this.loadData}
+          lastUpdate={this.state.lastUpdate}
+          version={this.state.version}
+        />
       </div>
     );
   }
