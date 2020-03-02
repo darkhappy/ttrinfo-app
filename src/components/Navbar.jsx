@@ -5,10 +5,8 @@ import { LinkContainer } from "react-router-bootstrap";
 class NavBar extends Component {
   render() {
     return (
-      <Navbar bg="light" variant="light" fixed="bottom">
-        <LinkContainer exact to="/">
-          <Navbar.Brand href="/">Toontown Rewritten Dashboard</Navbar.Brand>
-        </LinkContainer>
+      <Navbar bg="dark" variant="dark" fixed="bottom">
+        <Navbar.Brand>Toontown Rewritten Dashboard</Navbar.Brand>
         <Nav className="mr-auto">
           <LinkContainer to="/" exact>
             <Nav.Link>All</Nav.Link>
