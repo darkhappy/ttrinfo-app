@@ -1,9 +1,10 @@
 import React, { Component } from "react";
+import { Switch, Route } from "react-router-dom";
 import axios from "axios";
 
-// import Population from "./components/Population.jsx";
-// import Invasions from "./components/Invasions.jsx";
-// import SillyMeter from "./components/SillyMeter.jsx";
+import Population from "./components/Population.jsx";
+import Invasions from "./components/Invasions.jsx";
+import SillyMeter from "./components/SillyMeter.jsx";
 import All from "./components/All.jsx";
 import Navbar from "./components/Navbar.jsx";
 
@@ -80,11 +81,34 @@ class App extends Component {
     return (
       <div className="app">
         <div className="container py-2">
-          <All
-            invData={this.state.invData}
-            popData={this.state.popData}
-            sillyData={this.state.sillyData}
-          />
+          <Switch>
+            <Route
+              path="/"
+              exact
+              render={props => (
+                <All
+                  {...props}
+                  invData={this.state.invData}
+                  popData={this.state.popData}
+                  sillyData={this.state.sillyData}
+                />
+              )}
+            />
+            <Route
+              path="/inv"
+              render={props => <Invasions invData={this.state.invData} />}
+            />
+            <Route
+              path="/pop"
+              render={props => <Population popData={this.state.popData} />}
+            />
+            <Route
+              path="/silly"
+              render={props => (
+                <SillyMeter {...props} sillyData={this.state.sillyData} />
+              )}
+            />
+          </Switch>
         </div>
         <Navbar
           refresh={this.loadData}
