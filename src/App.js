@@ -96,7 +96,9 @@ class App extends Component {
             />
             <Route
               path="/inv"
-              render={props => <Invasions invData={this.state.invData} />}
+              render={props => (
+                <Invasions invData={this.state.invData} single={true} />
+              )}
             />
             <Route
               path="/pop"
