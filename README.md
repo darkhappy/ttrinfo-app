@@ -10,11 +10,10 @@ A modern electron application which shows you the current status of [Toontown Re
 
 - **Population Chart:** View the current population of each district with a nice pie chart. Labels are toggleable by simply clicking on their label in the legend.
 - **Silly Meter Status:** View the progress of the Silly Meter, along with the current/winning/future teams and the time until the next update/expiration of the boost/start of the next cycle.
-- **Invasions List:** A list of all active invasions.
+- **Invasions List:** A list of all active invasions, with an accurate ETA thanks to [Toon Plus](https://toon.plus/invasions).
 
 ## Planned features
 
-- **Estimated Invasion End:** List the time of when an invasion will end.
 - **Icons:** Minimal icons for invasions (cog type) and silly meter (teams) as well as an icon for the app itself (currently using the default electron one).
 - **Notifications:** Notifications for new invasions.
 - **Customization:** Customize the auto-refresh time, dark mode, etc.

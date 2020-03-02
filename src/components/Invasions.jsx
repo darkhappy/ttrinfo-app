@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Circle } from "rc-progress";
 import AnimatedNumber from "react-animated-number/build/AnimatedNumber";
+import * as timeago from "timeago.js";
+import ReactTooltip from "react-tooltip";
 
 function Districts(props) {
   const formatValue = value => value.toFixed(0);
@@ -14,10 +16,12 @@ function Districts(props) {
       {props.data.map(item => (
         <li key={item.district} className="list-group-item">
           <div className="row">
-            <div className="col-8">
-              <h6>{item.cog}</h6>
+            <div className="col-9">
+              <b data-tip={"started " + item.started}>{item.cog}</b>
+              <br />
+              <ReactTooltip place="right" type="dark" effect="solid" />
               <span className="text-muted">
-                in {item.district} since {item.started}
+                in {item.district}, ending {item.eta}
               </span>
             </div>
             <div className="col-2">
@@ -27,7 +31,7 @@ function Districts(props) {
                 strokeColor={item.colour}
               />
             </div>
-            <div className="col-2 text-right">
+            <div className="col-1 text-right">
               <AnimatedNumber
                 value={item.progress}
                 formatValue={formatValue}
@@ -63,7 +67,7 @@ class Invasions extends Component {
     Object.entries(invData).forEach(function(invasion) {
       console.log(invasion);
       // variables
-      const invDate = new Date(invasion[1].FirstSeen).toLocaleTimeString();
+      const invDate = timeago.format(new Date(invasion[1].FirstSeen));
       const percent = Math.floor(
         (invasion[1].CurrentProgress / invasion[1].MaxProgress) * 100
       );
@@ -77,11 +81,13 @@ class Invasions extends Component {
           : "4caf50"; // 0-50% done
 
       const invCog = invasion[1].Type.replace(/[^-.()0-9a-z& ]/gi, "");
+      const eta = timeago.format(new Date(invasion[1].EstimatedCompletion));
 
       data.push({
         district: invasion[1].District,
         cog: invCog,
         started: invDate,
+        eta: eta,
         progress: invasion[1].CurrentProgress,
         max: invasion[1].MaxProgress,
         percent: percent,
