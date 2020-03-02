@@ -21,7 +21,7 @@ class Invasions extends Component {
             <div className="col text-right">
               <Line
                 percent={item.percent}
-                strokeWidth={2}
+                strokeWidth={1}
                 strokeColor={item.colour}
               />
               <span className="badge badge-dark">
