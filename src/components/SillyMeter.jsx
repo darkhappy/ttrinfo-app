@@ -142,12 +142,26 @@ class SillyMeter extends Component {
   formatValue = value => value.toFixed(0);
   duration = 500;
 
+  getRawPercentage() {
+    const { sillyData } = this.props;
+    // if we're still loading, slap a 0 for niceness
+    if (sillyData.hp === undefined) {
+      return 0;
+    }
+
+    return sillyData.hp + " / 5000000";
+  }
+
   render() {
     return (
       <div>
         <h1>Silly Meter</h1>
         <h5>
-          <span className={this.getStatus("status")}>
+          <span
+            className={this.getStatus("status")}
+            data-for="sillymeterETA"
+            data-tip={this.getRawPercentage()}
+          >
             {this.getStatus("text")}{" "}
             <AnimatedNumber
               value={this.getPercentage()}
