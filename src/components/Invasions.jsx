@@ -1,57 +1,73 @@
 import React, { Component } from "react";
-import { Circle } from "rc-progress";
+import { Circle, Line } from "rc-progress";
 import AnimatedNumber from "react-animated-number/build/AnimatedNumber";
 import * as timeago from "timeago.js";
 import ReactTooltip from "react-tooltip";
 
-function Districts(props) {
-  const formatValue = value => value.toFixed(0);
-  const duration = 800;
-
-  if (props.data === null) {
-    return "Loading invasions";
-  }
-  return (
-    <ul className="list-group list-group-flush">
-      {props.data.map(item => (
-        <li key={item.district} className="list-group-item">
+class Invasions extends Component {
+  styling(item) {
+    switch (this.props.single) {
+      case true:
+        return (
           <div className="row">
-            <div className="col-9">
+            <div className="col">
+              <b>{item.cog}</b>
+              <br />
+              <span className="text-muted">
+                invaded <b>{item.district}</b> {item.started}, leaving{" "}
+                {item.eta}
+              </span>
+            </div>
+            <div className="col text-right">
+              <Line
+                percent={item.percent}
+                strokeWidth={1}
+                strokeColor={item.colour}
+              />
+              <span className="badge badge-dark">
+                Progress:{" "}
+                <AnimatedNumber
+                  value={item.percent}
+                  formatValue={this.formatValue}
+                  duration={this.duration}
+                />
+                %
+              </span>{" "}
+              <AnimatedNumber
+                value={item.progress}
+                formatValue={this.formatValue}
+                duration={this.duration}
+              />
+              /{item.max}
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <div className="row">
+            <div className="col">
               <b data-tip={"started " + item.started}>{item.cog}</b>
               <br />
               <ReactTooltip place="right" type="dark" effect="solid" />
               <span className="text-muted">
-                in {item.district}, ending {item.eta}
+                in <b>{item.district}</b>, ending {item.eta}
               </span>
             </div>
             <div className="col-2">
               <Circle
                 percent={item.percent}
-                strokeWidth={10}
+                strokeWidth={8}
                 strokeColor={item.colour}
-              />
-            </div>
-            <div className="col-1 text-right">
-              <AnimatedNumber
-                value={item.progress}
-                formatValue={formatValue}
-                duration={duration}
-              />
-              /
-              <AnimatedNumber
-                value={item.max}
-                formatValue={formatValue}
-                duration={duration}
+                data-tip={
+                  item.progress + "/" + item.max + " ( " + item.percent + "% )"
+                }
               />
             </div>
           </div>
-        </li>
-      ))}
-    </ul>
-  );
-}
+        );
+    }
+  }
 
-class Invasions extends Component {
   InvasionData() {
     // first we need to get the data
     const { invData } = this.props;
@@ -78,7 +94,7 @@ class Invasions extends Component {
           ? "#ff9800" // 75-90% done
           : percent >= 50
           ? "#ffc107" // 50-75% done
-          : "4caf50"; // 0-50% done
+          : "#4caf50"; // 0-50% done
 
       const invCog = invasion[1].Type.replace(/[^-.()0-9a-z& ]/gi, "");
       const eta = timeago.format(new Date(invasion[1].EstimatedCompletion));
@@ -99,13 +115,22 @@ class Invasions extends Component {
     return data;
   }
 
+  formatValue = value => value.toFixed(0);
+  duration = 500;
+
   render() {
-    const items = this.InvasionData();
+    const data = this.InvasionData();
 
     return (
       <>
         <h1>Invasions</h1>
-        <Districts data={items} />
+        <ul className="list-group list-group-flush">
+          {data.map(item => (
+            <li key={item.district} className="list-group-item">
+              {this.styling(item)}
+            </li>
+          ))}
+        </ul>
       </>
     );
   }

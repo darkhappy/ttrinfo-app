@@ -3,7 +3,7 @@ import { Doughnut } from "react-chartjs-2";
 import AnimatedNumber from "react-animated-number";
 
 class Population extends Component {
-  getPopulationData(arg) {
+  getTotalPopulationData(arg) {
     // first we need to get the data
     const { popData } = this.props;
     // if we're still loading, slap a huge loading for everything
@@ -11,13 +11,7 @@ class Population extends Component {
       return 0;
     }
 
-    // send total pop if it's total
-    if (arg === "total") {
-      return popData.totalPopulation;
-    }
-
-    // send the district's data
-    return popData.populationByDistrict[arg];
+    return popData.totalPopulation;
   }
 
   getPopulationChartData() {
@@ -113,13 +107,22 @@ class Population extends Component {
   formatValue = value => value.toFixed(0);
   duration = 500;
 
+  styling() {
+    switch (this.props.single) {
+      case true:
+        return 135;
+      default:
+        return 130;
+    }
+  }
+
   render() {
     return (
       <div>
         <h1>Current Population</h1>
         <h4>
           <AnimatedNumber
-            value={this.getPopulationData("total")}
+            value={this.getTotalPopulationData()}
             formatValue={this.formatValue}
             duration={this.duration}
           />{" "}
@@ -135,6 +138,7 @@ class Population extends Component {
               boxWidth: 20
             }
           }}
+          height={this.styling()}
           options={{
             tooltips: {
               mode: "nearest",
