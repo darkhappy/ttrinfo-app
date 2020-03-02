@@ -15,7 +15,7 @@ class App extends Component {
     sillyData: [],
     lastUpdate: "Updating...",
     mode: "Light",
-    version: "v0.2-beta"
+    version: "v0.2-dev"
   };
 
   loadData = async () => {
@@ -102,7 +102,9 @@ class App extends Component {
             />
             <Route
               path="/pop"
-              render={props => <Population popData={this.state.popData} />}
+              render={props => (
+                <Population popData={this.state.popData} single={true} />
+              )}
             />
             <Route
               path="/silly"
