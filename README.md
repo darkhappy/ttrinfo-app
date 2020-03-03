@@ -17,7 +17,6 @@ A modern electron application which shows you the current status of [Toontown Re
 - **Icons:** Minimal icons for invasions (cog type) and silly meter (teams) as well as an icon for the app itself (currently using the default electron one).
 - **Notifications:** Notifications for new invasions.
 - **Customization:** Customize the auto-refresh time, dark mode, etc.
-- **Individual pages:** Have pages for individual items (such as only show the population).
 
 ## Built with
 
