@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Line } from "rc-progress";
 import AnimatedNumber from "react-animated-number/build/AnimatedNumber";
+import * as timeago from "timeago.js";
+import ReactTooltip from "react-tooltip";
 
 class SillyMeter extends Component {
   getTeams() {
@@ -53,11 +55,35 @@ class SillyMeter extends Component {
 
     // get our custom status
     if (sillyData.state === "Active") {
-      return "Updating at " + date.toLocaleTimeString();
+      return (
+        <span
+          data-for="sillymeterETA"
+          data-tip={"updating in " + date.toLocaleString()}
+        >
+          Updating {timeago.format(date)}
+          <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
+        </span>
+      );
     } else if (sillyData.state === "Reward") {
-      return "Boosting until " + date.toLocaleString();
+      return (
+        <span
+          data-for="sillymeterETA"
+          data-tip={"ending at " + date.toLocaleString()}
+        >
+          Boost ending {timeago.format(date)}
+          <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
+        </span>
+      );
     } else {
-      return "Cooling down until " + date.toLocaleString();
+      return (
+        <span
+          data-for="sillymeterETA"
+          data-tip={"starting at " + date.toLocaleString()}
+        >
+          Starting {timeago.format(date)}
+          <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
+        </span>
+      );
     }
   }
 
@@ -116,12 +142,26 @@ class SillyMeter extends Component {
   formatValue = value => value.toFixed(0);
   duration = 500;
 
+  getRawPercentage() {
+    const { sillyData } = this.props;
+    // if we're still loading, slap a 0 for niceness
+    if (sillyData.hp === undefined) {
+      return 0;
+    }
+
+    return sillyData.hp + " / 5000000";
+  }
+
   render() {
     return (
       <div>
         <h1>Silly Meter</h1>
         <h5>
-          <span className={this.getStatus("status")}>
+          <span
+            className={this.getStatus("status")}
+            data-for="sillymeterETA"
+            data-tip={this.getRawPercentage()}
+          >
             {this.getStatus("text")}{" "}
             <AnimatedNumber
               value={this.getPercentage()}
