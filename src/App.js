@@ -15,7 +15,7 @@ class App extends Component {
     sillyData: [],
     lastUpdate: "Updating...",
     mode: "Light",
-    version: "v0.2-dev"
+    version: "v0.2-beta"
   };
 
   loadData = async () => {
