@@ -48,7 +48,7 @@ class Invasions extends Component {
             <div className="col">
               <b data-tip={"started " + item.started}>{item.cog}</b>
               <br />
-              <ReactTooltip place="right" type="dark" effect="solid" />
+              <ReactTooltip place="right" effect="solid" />
               <span className="text-muted">
                 in <b>{item.district}</b>, ending {item.eta}
               </span>
