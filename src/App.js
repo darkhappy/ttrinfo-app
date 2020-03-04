@@ -84,27 +84,24 @@ class App extends Component {
           <Switch>
             <Route
               path="/inv"
-              render={props => (
+              render={() => (
                 <Invasions invData={this.state.invData} single={true} />
               )}
             />
             <Route
               path="/pop"
-              render={props => (
+              render={() => (
                 <Population popData={this.state.popData} single={true} />
               )}
             />
             <Route
               path="/silly"
-              render={props => (
-                <SillyMeter {...props} sillyData={this.state.sillyData} />
-              )}
+              render={() => <SillyMeter sillyData={this.state.sillyData} />}
             />
             <Route
               path="/"
-              render={props => (
+              render={() => (
                 <All
-                  {...props}
                   invData={this.state.invData}
                   popData={this.state.popData}
                   sillyData={this.state.sillyData}
