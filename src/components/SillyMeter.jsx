@@ -132,6 +132,11 @@ class SillyMeter extends Component {
       return 0;
     }
 
+    // if it's inactive, return 0
+    if (sillyData.state === "Inactive") {
+      return 0;
+    }
+
     // get the health
     const hp = sillyData.hp;
 
