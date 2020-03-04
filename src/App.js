@@ -83,18 +83,6 @@ class App extends Component {
         <div className="container py-2">
           <Switch>
             <Route
-              path="/"
-              exact
-              render={props => (
-                <All
-                  {...props}
-                  invData={this.state.invData}
-                  popData={this.state.popData}
-                  sillyData={this.state.sillyData}
-                />
-              )}
-            />
-            <Route
               path="/inv"
               render={props => (
                 <Invasions invData={this.state.invData} single={true} />
@@ -110,6 +98,17 @@ class App extends Component {
               path="/silly"
               render={props => (
                 <SillyMeter {...props} sillyData={this.state.sillyData} />
+              )}
+            />
+            <Route
+              path="/"
+              render={props => (
+                <All
+                  {...props}
+                  invData={this.state.invData}
+                  popData={this.state.popData}
+                  sillyData={this.state.sillyData}
+                />
               )}
             />
           </Switch>
