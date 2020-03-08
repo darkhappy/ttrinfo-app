@@ -58,7 +58,7 @@ class SillyMeter extends Component {
       return (
         <span
           data-for="sillymeterETA"
-          data-tip={"updating in " + date.toLocaleString()}
+          data-tip={"updating at " + date.toLocaleString()}
         >
           Updating {timeago.format(date)}
           <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
