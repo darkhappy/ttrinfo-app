@@ -18,13 +18,17 @@ class Invasions extends Component {
                     {item.cog}
                   </b>
                   <br />
-                  <span className="text-muted">
+                  <span
+                    className="text-muted"
+                    data-tip={
+                      "Possibly changing means that the cogs may change " +
+                      item.eta +
+                      ", this only applies for mega invasions with multiple cog types."
+                    }
+                  >
                     invaded <b>{item.district}</b> {item.started}, possibly
                     changing {item.eta}
                   </span>
-                </div>
-                <div className="col text-right">
-                  <Line percent={100} strokeWidth={1} strokeColor={"#ff5722"} />
                 </div>
               </div>
             );
