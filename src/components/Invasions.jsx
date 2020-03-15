@@ -7,68 +7,123 @@ import ReactTooltip from "react-tooltip";
 class Invasions extends Component {
   styling(item) {
     switch (this.props.single) {
-      case true:
-        return (
-          <div className="row">
-            <div className="col">
-              <b>{item.cog}</b>
-              <br />
-              <span className="text-muted">
-                invaded <b>{item.district}</b> {item.started}, leaving{" "}
-                {item.eta}
-              </span>
-            </div>
-            <div className="col text-right">
-              <Line
-                percent={item.percent}
-                strokeWidth={1}
-                strokeColor={item.colour}
-              />
-              <span className="badge badge-dark">
-                Progress:{" "}
-                <AnimatedNumber
-                  value={item.percent}
-                  formatValue={this.formatValue}
-                  duration={this.duration}
-                />
-                %
-              </span>{" "}
-              <AnimatedNumber
-                value={item.progress}
-                formatValue={this.formatValue}
-                duration={this.duration}
-              />
-              /{item.max}
-            </div>
-          </div>
-        );
+      case true: // if we're on the single page
+        switch (item.megaInv) {
+          case true: // if there's a mega invasion
+            return (
+              <div className="row">
+                <div className="col">
+                  <b>
+                    <span className="badge badge-danger">Mega Invasion</span>{" "}
+                    {item.cog}
+                  </b>
+                  <br />
+                  <span className="text-muted">
+                    invaded <b>{item.district}</b> {item.started}, possibly
+                    changing {item.eta}
+                  </span>
+                </div>
+                <div className="col text-right">
+                  <Line percent={100} strokeWidth={1} strokeColor={"#ff5722"} />
+                </div>
+              </div>
+            );
+          default:
+            // if it's a normal invasion
+            return (
+              <div className="row">
+                <div className="col">
+                  <b>{item.cog}</b>
+                  <br />
+                  <span className="text-muted">
+                    invaded <b>{item.district}</b> {item.started}, leaving{" "}
+                    {item.eta}
+                  </span>
+                </div>
+                <div className="col text-right">
+                  <Line
+                    percent={item.percent}
+                    strokeWidth={1}
+                    strokeColor={item.colour}
+                  />
+                  <span className="badge badge-dark">
+                    Progress:{" "}
+                    <AnimatedNumber
+                      value={item.percent}
+                      formatValue={this.formatValue}
+                      duration={this.duration}
+                    />
+                    %
+                  </span>{" "}
+                  <AnimatedNumber
+                    value={item.progress}
+                    formatValue={this.formatValue}
+                    duration={this.duration}
+                  />
+                  /{item.max}
+                </div>
+              </div>
+            );
+        }
       default:
-        return (
-          <div className="row">
-            <div className="col">
-              <b data-tip={"started " + item.started}>{item.cog}</b>
-              <br />
-              <ReactTooltip place="right" effect="solid" />
-              <span className="text-muted">
-                in <b>{item.district}</b>, ending {item.eta}
-              </span>
-            </div>
-            <div className="col-2">
-              <Circle
-                percent={item.percent}
-                strokeWidth={8}
-                strokeColor={item.colour}
-                data-tip={
-                  item.progress + "/" + item.max + " ( " + item.percent + "% )"
-                }
-              />
-            </div>
-          </div>
-        );
+        // if we're on the main dash
+        switch (item.megaInv) {
+          case true: // if there's a mega invasion
+            return (
+              <div className="row">
+                <div className="col">
+                  <b>
+                    <span className="badge badge-danger">Mega Invasion</span>{" "}
+                    {item.cog}
+                  </b>
+                  <br />
+                  <span
+                    className="text-muted"
+                    data-tip={
+                      "Possibly changing means that the cogs may change " +
+                      item.eta +
+                      ", this only applies for mega invasions with multiple cog types."
+                    }
+                  >
+                    in <b>{item.district}</b>, possibly changing {item.eta}
+                  </span>
+                </div>
+              </div>
+            );
+          default:
+            // if it's a normal invasion
+            return (
+              <div className="row">
+                <div className="col">
+                  <b data-tip={"started " + item.started}>{item.cog}</b>
+                  <br />
+                  <ReactTooltip place="right" effect="solid" />
+                  <span className="text-muted">
+                    in <b>{item.district}</b>, ending {item.eta}
+                  </span>
+                </div>
+                <div className="col-2">
+                  <Circle
+                    percent={item.percent}
+                    strokeWidth={8}
+                    strokeColor={item.colour}
+                    data-tip={
+                      item.progress +
+                      "/" +
+                      item.max +
+                      " ( " +
+                      item.percent +
+                      "% )"
+                    }
+                  />
+                </div>
+              </div>
+            );
+        }
     }
   }
 
-  InvasionData() {
+  invasionData() {
     // first we need to get the data
     const { invData } = this.props;
     // if we're still loading, slap a loading
@@ -107,7 +162,8 @@ class Invasions extends Component {
         progress: invasion[1].CurrentProgress,
         max: invasion[1].MaxProgress,
         percent: percent,
-        colour: invColour
+        colour: invColour,
+        megaInv: invasion[1].MegaInvasion
       });
     });
 
@@ -119,7 +175,7 @@ class Invasions extends Component {
   duration = 500;
 
   render() {
-    const data = this.InvasionData();
+    const data = this.invasionData();
 
     return (
       <>
