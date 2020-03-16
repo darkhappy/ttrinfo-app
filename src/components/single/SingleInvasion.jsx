@@ -4,8 +4,11 @@ import AnimatedNumber from "react-animated-number/build/AnimatedNumber";
 import ReactTooltip from "react-tooltip";
 
 class SingleInvasion extends Component {
+  formatValue = value => value.toFixed(0);
+  duration = 500;
+
   render() {
-    const item = this.props;
+    const item = this.props.item;
     switch (item.megaInv) {
       case true: // if there's a mega invasion
         return (

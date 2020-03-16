@@ -4,7 +4,7 @@ import ReactTooltip from "react-tooltip";
 
 class DashInvasion extends Component {
   render() {
-    const item = this.props;
+    const item = this.props.item;
     switch (item.megaInv) {
       case true: // if there's a mega invasion
         return (
