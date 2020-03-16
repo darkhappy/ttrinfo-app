@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Line } from "rc-progress";
-import AnimatedNumber from "react-animated-number/build/AnimatedNumber";
+import { Circle } from "rc-progress";
 import ReactTooltip from "react-tooltip";
 
-class SingleInvasion extends Component {
+class DashInvasion extends Component {
   render() {
     const item = this.props;
     switch (item.megaInv) {
@@ -24,8 +23,7 @@ class SingleInvasion extends Component {
                   ", this only applies for mega invasions with multiple cog types."
                 }
               >
-                invaded <b>{item.district}</b> {item.started}, possibly changing{" "}
-                {item.eta}
+                in <b>{item.district}</b>, possibly changing {item.eta}
               </span>
               <ReactTooltip place="right" effect="solid" />
             </div>
@@ -36,40 +34,27 @@ class SingleInvasion extends Component {
         return (
           <div className="row">
             <div className="col">
-              <b>{item.cog}</b>
+              <b data-tip={"started " + item.started}>{item.cog}</b>
               <br />
-              <span className="text-muted">
-                invaded <b>{item.district}</b> {item.started}, leaving{" "}
-                {item.eta}
-              </span>
               <ReactTooltip place="right" effect="solid" />
+              <span className="text-muted">
+                in <b>{item.district}</b>, ending {item.eta}
+              </span>
             </div>
-            <div className="col text-right">
-              <Line
+            <div className="col-2">
+              <Circle
                 percent={item.percent}
-                strokeWidth={1}
+                strokeWidth={8}
                 strokeColor={item.colour}
+                data-tip={
+                  item.progress + "/" + item.max + " ( " + item.percent + "% )"
+                }
               />
-              <span className="badge badge-dark">
-                Progress:{" "}
-                <AnimatedNumber
-                  value={item.percent}
-                  formatValue={this.formatValue}
-                  duration={this.duration}
-                />
-                %
-              </span>{" "}
-              <AnimatedNumber
-                value={item.progress}
-                formatValue={this.formatValue}
-                duration={this.duration}
-              />
-              /{item.max}
+              <ReactTooltip place="right" effect="solid" />
             </div>
           </div>
         );
     }
   }
 }
-
-export default SingleInvasion;
+export default DashInvasion;
