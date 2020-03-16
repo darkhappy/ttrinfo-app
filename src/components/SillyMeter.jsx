@@ -54,35 +54,28 @@ class SillyMeter extends Component {
     }
 
     // get the date
-    const date = new Date(sillyData.nextUpdateTimestamp * 1000);
+    const date = new Date(
+      sillyData.nextUpdateTimestamp * 1000
+    ).toLocaleString();
 
     // get our custom status
     if (sillyData.state === "Active") {
       return (
-        <span
-          data-for="sillymeterETA"
-          data-tip={"updating at " + date.toLocaleString()}
-        >
+        <span data-for="sillymeterETA" data-tip={"updating at " + date}>
           Updating {timeago.format(date)}
           <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
         </span>
       );
     } else if (sillyData.state === "Reward") {
       return (
-        <span
-          data-for="sillymeterETA"
-          data-tip={"ending at " + date.toLocaleString()}
-        >
+        <span data-for="sillymeterETA" data-tip={"ending at " + date}>
           Boost ending {timeago.format(date)}
           <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
         </span>
       );
     } else {
       return (
-        <span
-          data-for="sillymeterETA"
-          data-tip={"starting at " + date.toLocaleString()}
-        >
+        <span data-for="sillymeterETA" data-tip={"starting at " + date}>
           Starting {timeago.format(date)}
           <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
         </span>
@@ -107,36 +100,18 @@ class SillyMeter extends Component {
   getPercentage() {
     // first we need to get the data
     const { sillyData } = this.props;
-    // if we're still loading, slap a 0 for niceness
-    if (sillyData.hp === undefined) {
-      return 0;
+    // if we're still loading or it's inactive, slap a 0 for niceness
+    if (sillyData.hp === undefined || sillyData.state === "Inactive") {
+      return 0; // the reason we're returning 0 is because the API lists the health as 5 000 000 when it's inactive, don't ask why
     }
-
-    // if it's inactive, return 0
-    if (sillyData.state === "Inactive") {
-      return 0;
-    }
-
-    // get the health
-    const hp = sillyData.hp;
 
     // do the math and return the health
-    return Math.floor(hp / 50000);
-  }
-
-  getRawHealth() {
-    const { sillyData } = this.props;
-    // if we're still loading, slap a 0 for niceness
-    if (sillyData.hp === undefined) {
-      return 0;
-    }
-
-    return sillyData.hp;
+    return Math.floor((sillyData.hp / 5000000) * 1000);
   }
 
   showBadge() {
     const { sillyData } = this.props;
-    // if we're still loading, slap a 0 for niceness
+    // if we're still loading, return null
     if (sillyData.hp === undefined) {
       return null;
     }
@@ -153,7 +128,7 @@ class SillyMeter extends Component {
       <span
         className={colour}
         data-for="sillymeterETA"
-        data-tip={this.getRawHealth() + " / 5000000"}
+        data-tip={sillyData.hp + " / 5000000"}
       >
         {sillyData.state}{" "}
         <AnimatedNumber
