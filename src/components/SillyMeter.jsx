@@ -106,7 +106,7 @@ class SillyMeter extends Component {
     }
 
     // do the math and return the health
-    return Math.floor((sillyData.hp / 5000000) * 1000);
+    return Math.floor((sillyData.hp / 5000000) * 100);
   }
 
   showBadge() {
