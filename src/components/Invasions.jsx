@@ -7,7 +7,8 @@ class Invasions extends Component {
   invasionData() {
     // first we need to get the data
     const { invData } = this.props;
-    // if we're still loading, slap a loading
+    console.log(invData);
+    // if we're still loading, return nothing
     if (invData === []) {
       return [];
     }
@@ -52,27 +53,35 @@ class Invasions extends Component {
     return data;
   }
 
-  showInvasions(data) {
-    return this.props.single ? (
-      <SingleInvasion item={data} />
+  showInvasions() {
+    const data = this.invasionData();
+    console.log(data);
+
+    return this.props.single ? ( // if this is the single page
+      <ul className="list-group list-group-flush">
+        {data.map(item => (
+          <li key={item.district} className="list-group-item">
+            <SingleInvasion item={item} />
+          </li>
+        ))}
+      </ul>
     ) : (
-      <DashInvasion item={data} />
+      // if this is the main page
+      <ul className="list-group list-group-flush">
+        {data.map(item => (
+          <li key={item.district} className="list-group-item">
+            <DashInvasion item={item} />
+          </li>
+        ))}
+      </ul>
     );
   }
 
   render() {
-    const data = this.invasionData();
-
     return (
       <>
         <h1>Invasions</h1>
-        <ul className="list-group list-group-flush">
-          {data.map(item => (
-            <li key={item.district} className="list-group-item">
-              {this.showInvasions(item)}
-            </li>
-          ))}
-        </ul>
+        {this.showInvasions()}
       </>
     );
   }
