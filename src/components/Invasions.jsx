@@ -58,7 +58,7 @@ class Invasions extends Component {
     console.log(data);
 
     return this.props.single ? ( // if this is the single page
-      <ul className="list-group list-group-flush">
+      <ul className="list-group list-group-flush small">
         {data.map(item => (
           <li key={item.district} className="list-group-item">
             <SingleInvasion item={item} />
@@ -67,7 +67,7 @@ class Invasions extends Component {
       </ul>
     ) : (
       // if this is the main page
-      <ul className="list-group list-group-flush">
+      <ul className="list-group list-group-flush small">
         {data.map(item => (
           <li key={item.district} className="list-group-item">
             <DashInvasion item={item} />
