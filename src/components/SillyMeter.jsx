@@ -5,7 +5,10 @@ import * as timeago from "timeago.js";
 import ReactTooltip from "react-tooltip";
 
 class SillyMeter extends Component {
-  getTeams() {
+  formatValue = value => value.toFixed(0);
+  duration = 500;
+
+  showTeams() {
     // first we need to get the data
     const { sillyData } = this.props;
     // if we're still loading, slap a huge loading for everything
@@ -42,7 +45,7 @@ class SillyMeter extends Component {
     );
   }
 
-  getDate() {
+  showDate() {
     // first we need to get the data
     const { sillyData } = this.props;
     // if we're still loading, slap a huge loading for everything
@@ -51,62 +54,32 @@ class SillyMeter extends Component {
     }
 
     // get the date
-    const date = new Date(sillyData.nextUpdateTimestamp * 1000);
+    const date = new Date(
+      sillyData.nextUpdateTimestamp * 1000
+    ).toLocaleString();
 
     // get our custom status
     if (sillyData.state === "Active") {
       return (
-        <span
-          data-for="sillymeterETA"
-          data-tip={"updating at " + date.toLocaleString()}
-        >
+        <span data-for="sillymeterETA" data-tip={"updating at " + date}>
           Updating {timeago.format(date)}
           <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
         </span>
       );
     } else if (sillyData.state === "Reward") {
       return (
-        <span
-          data-for="sillymeterETA"
-          data-tip={"ending at " + date.toLocaleString()}
-        >
+        <span data-for="sillymeterETA" data-tip={"ending at " + date}>
           Boost ending {timeago.format(date)}
           <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
         </span>
       );
     } else {
       return (
-        <span
-          data-for="sillymeterETA"
-          data-tip={"starting at " + date.toLocaleString()}
-        >
+        <span data-for="sillymeterETA" data-tip={"starting at " + date}>
           Starting {timeago.format(date)}
           <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
         </span>
       );
-    }
-  }
-
-  getStatus(arg) {
-    // first we need to get the data
-    const { sillyData } = this.props;
-
-    // check what we're working with
-    if (arg === "text") {
-      // if we're still loading, slap a huge loading for everything
-      if (sillyData.hp === undefined) {
-        return "Loading...";
-      }
-      return sillyData.state;
-    }
-
-    if (sillyData.state === "Active") {
-      return "badge badge-success";
-    } else if (sillyData.state === "Reward") {
-      return "badge badge-info";
-    } else {
-      // this is either if it's inactive or if we're loading
-      return "badge badge-secondary";
     }
   }
 
@@ -127,34 +100,45 @@ class SillyMeter extends Component {
   getPercentage() {
     // first we need to get the data
     const { sillyData } = this.props;
-    // if we're still loading, slap a 0 for niceness
-    if (sillyData.hp === undefined) {
-      return 0;
+    // if we're still loading or it's inactive, slap a 0 for niceness
+    if (sillyData.hp === undefined || sillyData.state === "Inactive") {
+      return 0; // the reason we're returning 0 is because the API lists the health as 5 000 000 when it's inactive, don't ask why
     }
-
-    // if it's inactive, return 0
-    if (sillyData.state === "Inactive") {
-      return 0;
-    }
-
-    // get the health
-    const hp = sillyData.hp;
 
     // do the math and return the health
-    return Math.floor(hp / 50000);
+    return Math.floor((sillyData.hp / 5000000) * 100);
   }
 
-  formatValue = value => value.toFixed(0);
-  duration = 500;
-
-  getRawPercentage() {
+  showBadge() {
     const { sillyData } = this.props;
-    // if we're still loading, slap a 0 for niceness
+    // if we're still loading, return null
     if (sillyData.hp === undefined) {
-      return 0;
+      return null;
     }
 
-    return sillyData.hp + " / 5000000";
+    // colouring
+    const colour =
+      sillyData.state === "Active"
+        ? "badge badge-success" // it's rising
+        : sillyData.state === "Reward"
+        ? "badge badge-info" // it's giving some reward
+        : "badge badge-secondary"; // it's cooling down
+
+    return (
+      <span
+        className={colour}
+        data-for="sillymeterETA"
+        data-tip={sillyData.hp + " / 5000000"}
+      >
+        {sillyData.state}{" "}
+        <AnimatedNumber
+          value={this.getPercentage()}
+          formatValue={this.formatValue}
+          duration={this.duration}
+        />
+        %
+      </span>
+    );
   }
 
   render() {
@@ -162,24 +146,10 @@ class SillyMeter extends Component {
       <div>
         <h1>Silly Meter</h1>
         <h5>
-          <span
-            className={this.getStatus("status")}
-            data-for="sillymeterETA"
-            data-tip={this.getRawPercentage()}
-          >
-            {this.getStatus("text")}{" "}
-            <AnimatedNumber
-              value={this.getPercentage()}
-              formatValue={this.formatValue}
-              duration={this.duration}
-            />
-            %
-          </span>{" "}
-          {this.getDate()}
+          {this.showBadge()} {this.showDate()}
         </h5>
         <Line percent={this.getPercentage()} strokeColor={this.getColour()} />
-        <br />
-        {this.getTeams()}
+        {this.showTeams()}
       </div>
     );
   }

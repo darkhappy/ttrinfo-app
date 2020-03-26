@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Doughnut } from "react-chartjs-2";
-import AnimatedNumber from "react-animated-number";
+import GraphPopulation from "./GraphPopulation";
 
 class Population extends Component {
-  getTotalPopulationData(arg) {
+  getTotalPopulationData() {
     // first we need to get the data
     const { popData } = this.props;
     // if we're still loading, slap a huge loading for everything
@@ -104,51 +103,14 @@ class Population extends Component {
     return data;
   }
 
-  formatValue = value => value.toFixed(0);
-  duration = 500;
-
-  styling() {
-    switch (this.props.single) {
-      case true:
-        return 135;
-      default:
-        return 130;
-    }
-  }
-
   render() {
     return (
       <div>
         <h1>Current Population</h1>
-        <h4>
-          <AnimatedNumber
-            value={this.getTotalPopulationData()}
-            formatValue={this.formatValue}
-            duration={this.duration}
-          />{" "}
-          total toons
-        </h4>
-        <Doughnut
-          data={this.getPopulationChartData()}
-          legend={{
-            position: "right",
-            align: "center",
-            rtl: true,
-            labels: {
-              boxWidth: 20
-            }
-          }}
-          height={this.styling()}
-          options={{
-            tooltips: {
-              mode: "nearest",
-              callbacks: {
-                label: function(tooltipItem, data) {
-                  return " " + data.labels[tooltipItem.index];
-                }
-              }
-            }
-          }}
+        <GraphPopulation
+          totalPop={this.getTotalPopulationData()}
+          chartPop={this.getPopulationChartData()}
+          single={this.props.single}
         />
       </div>
     );
