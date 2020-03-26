@@ -17,6 +17,10 @@ class GraphPopulation extends Component {
   render() {
     const { totalPop, chartPop } = this.props;
     const { formatValue, duration } = this;
+    const text =
+      totalPop === 1
+        ? "toon" // if there's only one
+        : "total toons"; // if there's more than one
     return (
       <>
         <h4>
@@ -25,7 +29,7 @@ class GraphPopulation extends Component {
             formatValue={formatValue}
             duration={duration}
           />{" "}
-          total toons
+          {text}
         </h4>
         <Doughnut
           data={chartPop}
