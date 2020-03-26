@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import GraphPopulation from "./GraphPopulation";
+import SinglePopulation from "./single/SinglePopulation";
+import DashPopulation from "./dash/DashPopulation";
 
 class Population extends Component {
   getTotalPopulationData() {
@@ -103,15 +104,26 @@ class Population extends Component {
     return data;
   }
 
+  showPopulation() {
+    return this.props.single ? ( // if this is the single page
+      <SinglePopulation
+        totalPop={this.getTotalPopulationData()}
+        chartPop={this.getPopulationChartData()}
+      />
+    ) : (
+      // if this is the main page
+      <DashPopulation
+        totalPop={this.getTotalPopulationData()}
+        chartPop={this.getPopulationChartData()}
+      />
+    );
+  }
+
   render() {
     return (
       <div>
         <h1>Current Population</h1>
-        <GraphPopulation
-          totalPop={this.getTotalPopulationData()}
-          chartPop={this.getPopulationChartData()}
-          single={this.props.single}
-        />
+        {this.showPopulation()}
       </div>
     );
   }

@@ -2,18 +2,10 @@ import React, { Component } from "react";
 import { Doughnut } from "react-chartjs-2";
 import AnimatedNumber from "react-animated-number";
 
-class GraphPopulation extends Component {
+class SinglePopulation extends Component {
   formatValue = value => value.toFixed(0);
   duration = 500;
 
-  styling() {
-    switch (this.props.single) {
-      case true:
-        return 135;
-      default:
-        return 130;
-    }
-  }
   render() {
     const { totalPop, chartPop } = this.props;
     const { formatValue, duration } = this;
@@ -41,7 +33,7 @@ class GraphPopulation extends Component {
               boxWidth: 20
             }
           }}
-          height={this.styling()}
+          height={135}
           options={{
             tooltips: {
               mode: "nearest",
@@ -58,4 +50,4 @@ class GraphPopulation extends Component {
   }
 }
 
-export default GraphPopulation;
+export default SinglePopulation;
