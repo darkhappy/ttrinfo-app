@@ -19,14 +19,21 @@ class Invasions extends Component {
       const percent = Math.floor(
         (invasion[1].CurrentProgress / invasion[1].MaxProgress) * 100
       );
-      const invColour =
-        percent >= 90
-          ? "#ff5722" // 90-100% done
-          : percent >= 75
-          ? "#ff9800" // 75-90% done
-          : percent >= 50
-          ? "#ffc107" // 50-75% done
-          : "#4caf50"; // 0-50% done
+
+      let invColour;
+      if (percent >= 90) {
+        // 90-100% done
+        invColour = "#ff5722";
+      } else if (percent >= 90) {
+        // 75-90% done
+        invColour = "#ff9800";
+      } else if (percent >= 50) {
+        // 50-75% done
+        invColour = "#ffc107";
+      } else {
+        // 0-50% done
+        invColour = "#4caf50";
+      }
 
       const invCog = invasion[1].Type.replace(/[^-.()0-9a-z& ]/gi, "");
       const eta = timeago.format(new Date(invasion[1].EstimatedCompletion));
