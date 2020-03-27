@@ -7,12 +7,7 @@ class Invasions extends Component {
   invasionData() {
     // first we need to get the data
     const { invData } = this.props;
-    // if we're still loading, return nothing
-    if (invData === []) {
-      return [];
-    }
 
-    // we got something, so send that
     return Object.entries(invData).map(invasion => {
       // variables
       const invDate = timeago.format(new Date(invasion[1].FirstSeen));
