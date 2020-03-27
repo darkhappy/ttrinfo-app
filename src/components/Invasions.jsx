@@ -7,18 +7,13 @@ class Invasions extends Component {
   invasionData() {
     // first we need to get the data
     const { invData } = this.props;
-    console.log(invData);
     // if we're still loading, return nothing
     if (invData === []) {
       return [];
     }
 
-    console.log(invData);
-
-    // build the array
-    let data = [];
-    Object.entries(invData).forEach(function(invasion) {
-      console.log(invasion);
+    // we got something, so send that
+    return Object.entries(invData).map(invasion => {
       // variables
       const invDate = timeago.format(new Date(invasion[1].FirstSeen));
       const percent = Math.floor(
@@ -36,7 +31,7 @@ class Invasions extends Component {
       const invCog = invasion[1].Type.replace(/[^-.()0-9a-z& ]/gi, "");
       const eta = timeago.format(new Date(invasion[1].EstimatedCompletion));
 
-      data.push({
+      return {
         district: invasion[1].District,
         cog: invCog,
         started: invDate,
@@ -46,16 +41,12 @@ class Invasions extends Component {
         percent: percent,
         colour: invColour,
         megaInv: invasion[1].MegaInvasion
-      });
+      };
     });
-
-    // now push that to the state
-    return data;
   }
 
   showInvasions() {
     const data = this.invasionData();
-    console.log(data);
 
     return this.props.single ? ( // if this is the single page
       <ul className="list-group list-group-flush">
