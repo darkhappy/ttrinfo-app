@@ -11,75 +11,76 @@ class SillyMeter extends Component {
   showTeams() {
     // first we need to get the data
     const { sillyData } = this.props;
-    // if we're still loading, slap a huge loading for everything
-    if (sillyData.hp === undefined) {
-      return "Loading...";
-    }
 
-    // if there's a winner, return the winner instead
-    if (sillyData.winner !== null) {
-      return <h5>{sillyData.winner}</h5>;
-    }
+    switch (sillyData.state) {
+      case "Inactive": // if it's inactive
+        return (
+          <p className="text-muted">
+            Upcoming teams: {sillyData.rewards[0]}
+            <br />
+            {sillyData.rewards[1]}
+            <br />
+            {sillyData.rewards[2]}
+          </p>
+        );
 
-    // if it's inactive, show "upcoming teams"
-    if (sillyData.state === "Inactive") {
-      return (
-        <p className="text-muted">
-          Upcoming teams: {sillyData.rewards[0]}
-          <br />
-          {sillyData.rewards[1]}
-          <br />
-          {sillyData.rewards[2]}
-        </p>
-      );
-    }
+      case "Active": // if it's going on
+        return (
+          <p>
+            {sillyData.rewards[0]}
+            <br />
+            {sillyData.rewards[1]}
+            <br />
+            {sillyData.rewards[2]}
+          </p>
+        );
 
-    return (
-      <p>
-        {sillyData.rewards[0]}
-        <br />
-        {sillyData.rewards[1]}
-        <br />
-        {sillyData.rewards[2]}
-      </p>
-    );
+      case "Reward": // if there's a winner
+        return <h5>{sillyData.winner}</h5>;
+
+      default:
+        // in case we can't load it
+        return <p>Loading....</p>;
+    }
   }
 
   showDate() {
     // first we need to get the data
     const { sillyData } = this.props;
-    // if we're still loading, slap a huge loading for everything
-    if (sillyData.hp === undefined) {
-      return "Loading...";
-    }
 
     // get the date
     const date = new Date(
       sillyData.nextUpdateTimestamp * 1000
     ).toLocaleString();
 
-    // get our custom status
-    if (sillyData.state === "Active") {
-      return (
-        <span data-for="sillymeterETA" data-tip={"updating at " + date}>
-          Updating {timeago.format(date)}
-          <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
-        </span>
-      );
-    } else if (sillyData.state === "Reward") {
-      return (
-        <span data-for="sillymeterETA" data-tip={"ending at " + date}>
-          Boost ending {timeago.format(date)}
-          <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
-        </span>
-      );
-    } else {
-      return (
-        <span data-for="sillymeterETA" data-tip={"starting at " + date}>
-          Starting {timeago.format(date)}
-          <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
-        </span>
-      );
+    switch (sillyData.state) {
+      case "Inactive": // if it's inactive
+        return (
+          <span data-for="sillymeterETA" data-tip={"starting at " + date}>
+            Starting {timeago.format(date)}
+            <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
+          </span>
+        );
+
+      case "Active": // if it's going on
+        return (
+          <span data-for="sillymeterETA" data-tip={"updating at " + date}>
+            Updating {timeago.format(date)}
+            <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
+          </span>
+        );
+
+      case "Reward": // if there's a winner
+        return (
+          <span data-for="sillymeterETA" data-tip={"ending at " + date}>
+            Boost ending {timeago.format(date)}
+            <ReactTooltip id="sillymeterETA" place="bottom" effect="solid" />
+          </span>
+        );
+
+      default:
+        // in case we can't load it
+        return <p>Loading....</p>;
     }
   }
 
@@ -87,13 +88,16 @@ class SillyMeter extends Component {
     // first we need to get the data
     const { sillyData } = this.props;
 
-    if (sillyData.state === "Active") {
-      return "#38b44a";
-    } else if (sillyData.state === "Reward") {
-      return "#17a2b8";
-    } else {
-      // this is either if it's inactive or if we're loading
-      return "#aea79f";
+    switch (sillyData.state) {
+      case "Active": // if we're going up
+        return "#38b44a";
+
+      case "Reward": // if there's a winner
+        return "#17a2b8";
+
+      default:
+        // loading or inactive
+        return "#aea79f";
     }
   }
 
@@ -110,6 +114,7 @@ class SillyMeter extends Component {
   }
 
   showBadge() {
+    // get data
     const { sillyData } = this.props;
     // if we're still loading, return null
     if (sillyData.hp === undefined) {
@@ -122,7 +127,7 @@ class SillyMeter extends Component {
         ? "badge badge-success" // it's rising
         : sillyData.state === "Reward"
         ? "badge badge-info" // it's giving some reward
-        : "badge badge-secondary"; // it's cooling down
+        : "badge badge-secondary"; // it's cooling down, or unknown
 
     return (
       <span
