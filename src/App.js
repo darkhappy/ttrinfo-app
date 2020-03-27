@@ -20,9 +20,9 @@ class App extends Component {
 
   loadData = async () => {
     // define variables
-    var popData;
-    var sillyData;
-    var invData;
+    let popData;
+    let sillyData;
+    let invData;
 
     // tell the boys that we are updating
     this.setState({

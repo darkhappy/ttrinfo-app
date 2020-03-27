@@ -16,7 +16,7 @@ class Invasions extends Component {
     console.log(invData);
 
     // build the array
-    var data = [];
+    let data = [];
     Object.entries(invData).forEach(function(invasion) {
       console.log(invasion);
       // variables
