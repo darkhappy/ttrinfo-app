@@ -5,14 +5,13 @@ import AnimatedNumber from "react-animated-number";
 class GraphPopulation extends Component {
   formatValue = value => value.toFixed(0);
   duration = 500;
-
-  styling = this.props.single
+  height = this.props.single
     ? 135 // if single page
     : 130; // if dash;
 
   render() {
     const { totalPop, chartPop } = this.props;
-    const { formatValue, duration } = this;
+    const { formatValue, duration, height } = this;
     const text =
       totalPop === 1
         ? "toon" // if there's only one
@@ -37,7 +36,7 @@ class GraphPopulation extends Component {
               boxWidth: 20
             }
           }}
-          height={this.styling()}
+          height={height}
           options={{
             tooltips: {
               mode: "nearest",
