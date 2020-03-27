@@ -96,7 +96,9 @@ class App extends Component {
             />
             <Route
               path="/silly"
-              render={() => <SillyMeter sillyData={this.state.sillyData} />}
+              render={() => (
+                <SillyMeter sillyData={this.state.sillyData} single={true} />
+              )}
             />
             <Route
               path="/"
