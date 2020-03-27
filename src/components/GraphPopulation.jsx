@@ -6,14 +6,10 @@ class GraphPopulation extends Component {
   formatValue = value => value.toFixed(0);
   duration = 500;
 
-  styling() {
-    switch (this.props.single) {
-      case true:
-        return 135;
-      default:
-        return 130;
-    }
-  }
+  styling = this.props.single
+    ? 135 // if single page
+    : 130; // if dash;
+
   render() {
     const { totalPop, chartPop } = this.props;
     const { formatValue, duration } = this;
