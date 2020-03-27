@@ -7,36 +7,33 @@ class Invasions extends Component {
   invasionData() {
     // first we need to get the data
     const { invData } = this.props;
-    console.log(invData);
-    // if we're still loading, return nothing
-    if (invData === []) {
-      return [];
-    }
 
-    console.log(invData);
-
-    // build the array
-    var data = [];
-    Object.entries(invData).forEach(function(invasion) {
-      console.log(invasion);
+    return Object.entries(invData).map(invasion => {
       // variables
       const invDate = timeago.format(new Date(invasion[1].FirstSeen));
       const percent = Math.floor(
         (invasion[1].CurrentProgress / invasion[1].MaxProgress) * 100
       );
-      const invColour =
-        percent >= 90
-          ? "#ff5722" // 90-100% done
-          : percent >= 75
-          ? "#ff9800" // 75-90% done
-          : percent >= 50
-          ? "#ffc107" // 50-75% done
-          : "#4caf50"; // 0-50% done
+
+      let invColour;
+      if (percent >= 90) {
+        // 90-100% done
+        invColour = "#ff5722";
+      } else if (percent >= 90) {
+        // 75-90% done
+        invColour = "#ff9800";
+      } else if (percent >= 50) {
+        // 50-75% done
+        invColour = "#ffc107";
+      } else {
+        // 0-50% done
+        invColour = "#4caf50";
+      }
 
       const invCog = invasion[1].Type.replace(/[^-.()0-9a-z& ]/gi, "");
       const eta = timeago.format(new Date(invasion[1].EstimatedCompletion));
 
-      data.push({
+      return {
         district: invasion[1].District,
         cog: invCog,
         started: invDate,
@@ -46,16 +43,12 @@ class Invasions extends Component {
         percent: percent,
         colour: invColour,
         megaInv: invasion[1].MegaInvasion
-      });
+      };
     });
-
-    // now push that to the state
-    return data;
   }
 
   showInvasions() {
     const data = this.invasionData();
-    console.log(data);
 
     return this.props.single ? ( // if this is the single page
       <ul className="list-group list-group-flush small">

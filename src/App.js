@@ -20,10 +20,9 @@ class App extends Component {
 
   loadData = async () => {
     // define variables
-    var popData;
-    var sillyData;
-    var invData;
-    const userAgent = "ttrinfo-app/" + this.state.version;
+    let popData;
+    let sillyData;
+    let invData;
 
     // tell the boys that we are updating
     this.setState({
@@ -33,8 +32,7 @@ class App extends Component {
     // start with population
     await axios({
       method: "get",
-      url: "https://www.toontownrewritten.com/api/population",
-      headers: { "User-Agent": userAgent }
+      url: "https://www.toontownrewritten.com/api/population"
     }).then(resp => {
       popData = resp.data;
     });
@@ -42,16 +40,14 @@ class App extends Component {
     // head out to the sillymeter now
     await axios({
       method: "get",
-      url: "https://www.toontownrewritten.com/api/sillymeter",
-      headers: { "User-Agent": userAgent }
+      url: "https://www.toontownrewritten.com/api/sillymeter"
     }).then(resp => {
       sillyData = resp.data;
     });
     // quick stop at the invasions
     await axios({
       method: "get",
-      url: "https://api.toon.plus/invasions/",
-      headers: { "User-Agent": userAgent }
+      url: "https://api.toon.plus/invasions/"
     }).then(resp => {
       invData = resp.data;
     });
