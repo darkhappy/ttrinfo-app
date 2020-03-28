@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import SingleSillyMeterChart from "./SingleSillyMeterChart";
 
 class SingleSillyMeter extends Component {
   showTeams() {
@@ -103,6 +104,8 @@ class SingleSillyMeter extends Component {
       <div>
         <hr />
         {this.showTeams()}
+        <hr />
+        <SingleSillyMeterChart sillyData={this.props.sillyData} />
       </div>
     );
   }
