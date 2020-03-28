@@ -3,46 +3,12 @@ import { Line } from "rc-progress";
 import AnimatedNumber from "react-animated-number/build/AnimatedNumber";
 import * as timeago from "timeago.js";
 import ReactTooltip from "react-tooltip";
+import SingleSillyMeter from "./single/SingleSillyMeter";
+import DashSillyMeter from "./dash/DashSillyMeter";
 
 class SillyMeter extends Component {
   formatValue = value => value.toFixed(0);
   duration = 500;
-
-  showTeams() {
-    // first we need to get the data
-    const { sillyData } = this.props;
-
-    switch (sillyData.state) {
-      case "Inactive": // if it's inactive
-        return (
-          <p className="text-muted">
-            Upcoming teams: {sillyData.rewards[0]}
-            <br />
-            {sillyData.rewards[1]}
-            <br />
-            {sillyData.rewards[2]}
-          </p>
-        );
-
-      case "Active": // if it's going on
-        return (
-          <p>
-            {sillyData.rewards[0]}
-            <br />
-            {sillyData.rewards[1]}
-            <br />
-            {sillyData.rewards[2]}
-          </p>
-        );
-
-      case "Reward": // if there's a winner
-        return <h5>{sillyData.winner}</h5>;
-
-      default:
-        // in case we can't load it
-        return <p>Loading....</p>;
-    }
-  }
 
   showDate() {
     // first we need to get the data
@@ -146,6 +112,14 @@ class SillyMeter extends Component {
     );
   }
 
+  showSillyMeter() {
+    return this.props.single ? ( // if this is the single page
+      <SingleSillyMeter sillyData={this.props.sillyData} />
+    ) : (
+      <DashSillyMeter sillyData={this.props.sillyData} />
+    );
+  }
+
   render() {
     return (
       <div>
@@ -154,7 +128,7 @@ class SillyMeter extends Component {
           {this.showBadge()} {this.showDate()}
         </h5>
         <Line percent={this.getPercentage()} strokeColor={this.getColour()} />
-        {this.showTeams()}
+        {this.showSillyMeter()}
       </div>
     );
   }
