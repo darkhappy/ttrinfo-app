@@ -49,6 +49,20 @@ class Invasions extends Component {
 
   showInvasions() {
     const data = this.invasionData();
+    console.log(data);
+
+    // if no invasions
+    if (data.length === 0) {
+      return (
+        <div className="alert alert-info">
+          <h5>Hold on...</h5>
+          <p>
+            Either we're loading, or there aren't any cogs invading Toontown
+            Rewritten as of {new Date().toLocaleTimeString()}.
+          </p>
+        </div>
+      );
+    }
 
     return this.props.single ? ( // if this is the single page
       <ul className="list-group list-group-flush small">
