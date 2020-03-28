@@ -1,5 +1,7 @@
 import React, { Component } from "react";
-import GraphPopulation from "./GraphPopulation";
+import SinglePopulation from "./single/SinglePopulation";
+import DashPopulation from "./dash/DashPopulation";
+import SinglePopulationList from "./single/SinglePopulationList";
 
 class Population extends Component {
   getTotalPopulationData() {
@@ -103,15 +105,91 @@ class Population extends Component {
     return data;
   }
 
+  populationList() {
+    // first we need to get the data
+    const { popData } = this.props;
+    const distPop = popData.populationByDistrict; // this is just for naming sake
+
+    // if we're still loading, slap a huge loading for everything
+    if (popData.totalPopulation === undefined) {
+      return [];
+    }
+
+    // list of all districts
+    const districts = [
+      "Blam Canyon",
+      "Boingbury",
+      "Bounceboro",
+      "Fizzlefield",
+      "Gulp Gulch",
+      "Hiccup Hills",
+      "Kaboom Cliffs",
+      "Splashport",
+      "Splat Summit",
+      "Thwackville",
+      "Whoosh Rapids",
+      "Zoink Falls"
+    ];
+
+    // build the array
+    var data = [];
+    districts.forEach(function(district) {
+      const badge =
+        distPop[district] >= 500
+          ? "badge badge-danger"
+          : distPop[district] >= 300
+          ? "badge badge-success"
+          : "badge badge-info";
+      const status =
+        distPop[district] >= 500
+          ? "Full"
+          : distPop[district] >= 300
+          ? "Ideal"
+          : "Quiet";
+      data.push({
+        name: district,
+        population: distPop[district],
+        badge: badge,
+        status: status
+      });
+    });
+    // sort by descending
+    data.sort(function(a, b) {
+      return b.population - a.population;
+    });
+    // return the array
+    return data;
+  }
+
+  showPopulation() {
+    return this.props.single ? ( // if this is the single page
+      <div className="row">
+        <div className="col">
+          <SinglePopulation
+            chartPop={this.getPopulationChartData()}
+            totalPop={this.getTotalPopulationData()}
+          />
+        </div>
+        <div className="col-3">
+          <SinglePopulationList list={this.populationList()} />
+        </div>
+      </div>
+    ) : (
+      // if this is the main page
+      <div>
+        <DashPopulation
+          totalPop={this.getTotalPopulationData()}
+          chartPop={this.getPopulationChartData()}
+        />
+      </div>
+    );
+  }
+
   render() {
     return (
       <div>
         <h1>Current Population</h1>
-        <GraphPopulation
-          totalPop={this.getTotalPopulationData()}
-          chartPop={this.getPopulationChartData()}
-          single={this.props.single}
-        />
+        {this.showPopulation()}
       </div>
     );
   }

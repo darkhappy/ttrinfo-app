@@ -2,22 +2,20 @@ import React, { Component } from "react";
 import { Doughnut } from "react-chartjs-2";
 import AnimatedNumber from "react-animated-number";
 
-class GraphPopulation extends Component {
+class SinglePopulation extends Component {
   formatValue = value => value.toFixed(0);
   duration = 500;
-  height = this.props.single
-    ? 135 // if single page
-    : 130; // if dash;
 
   render() {
-    const { totalPop, chartPop } = this.props;
-    const { formatValue, duration, height } = this;
+    const { chartPop, totalPop } = this.props;
+    const { formatValue, duration } = this;
     const text =
       totalPop === 1
         ? "toon" // if there's only one
         : "total toons"; // if there's more than one
+
     return (
-      <>
+      <div>
         <h4>
           <AnimatedNumber
             value={totalPop}
@@ -29,14 +27,8 @@ class GraphPopulation extends Component {
         <Doughnut
           data={chartPop}
           legend={{
-            position: "right",
-            align: "center",
-            rtl: true,
-            labels: {
-              boxWidth: 20
-            }
+            display: false
           }}
-          height={height}
           options={{
             tooltips: {
               mode: "nearest",
@@ -48,9 +40,9 @@ class GraphPopulation extends Component {
             }
           }}
         />
-      </>
+      </div>
     );
   }
 }
 
-export default GraphPopulation;
+export default SinglePopulation;
