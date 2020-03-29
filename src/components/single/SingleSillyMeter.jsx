@@ -16,23 +16,17 @@ class SingleSillyMeter extends Component {
         <div className={this.isWinner(0)}>
           <h4 className="">{sillyData.rewards[0]}</h4>
           <p>{sillyData.rewardDescriptions[0]}</p>
-          <span className={this.showBadge(0)}>
-            {this.showPercentage(0)}% of votes
-          </span>
+          {this.showBadge(0)}
         </div>
         <div className={this.isWinner(1)}>
           <h4 className="">{sillyData.rewards[1]}</h4>
           <p>{sillyData.rewardDescriptions[1]}</p>
-          <span className={this.showBadge(1)}>
-            {this.showPercentage(1)}% of votes
-          </span>
+          {this.showBadge(1)}
         </div>
         <div className={this.isWinner(2)}>
           <h4 className="">{sillyData.rewards[2]}</h4>
           <p>{sillyData.rewardDescriptions[2]}</p>
-          <span className={this.showBadge(2)}>
-            {this.showPercentage(2)}% of votes
-          </span>
+          {this.showBadge(2)}
         </div>
       </div>
     );
@@ -43,7 +37,7 @@ class SingleSillyMeter extends Component {
     const { sillyData } = this.props;
 
     // if we're loading or there's no winner, send the default value
-    if (sillyData.winner === undefined) {
+    if (sillyData.winner === undefined || sillyData.winner === null) {
       return "col";
     }
 
@@ -60,7 +54,7 @@ class SingleSillyMeter extends Component {
     const { sillyData } = this.props;
 
     // if we're loading or there's no winner, don't send anything
-    if (sillyData.winner === undefined) {
+    if (sillyData.winner === undefined || sillyData.winner === null) {
       return null;
     }
 
@@ -73,7 +67,7 @@ class SingleSillyMeter extends Component {
     const { sillyData } = this.props;
 
     // if we're loading or there's no winner, don't send anything
-    if (sillyData.winner === undefined) {
+    if (sillyData.winner === undefined || sillyData.winner === null) {
       return null;
     }
 
@@ -88,23 +82,35 @@ class SingleSillyMeter extends Component {
       sortedArray.findIndex(item => item === rawPoints) + 1 // we add one because i like reading properly
     ) {
       case 1: // 1st place
-        return "btn btn-success btn-lg";
+        return (
+          <span className="btn btn-success btn-lg">
+            {this.showPercentage(team)}% of votes
+          </span>
+        );
 
       case 2: // 2nd place
-        return "btn btn-warning btn-sm";
+        return (
+          <span className="btn btn-warning btn-sm">
+            {this.showPercentage(team)}% of votes
+          </span>
+        );
 
       default:
         // loser lol
-        return "btn btn-danger btn-sm";
+        return (
+          <span className="btn btn-danger btn-sm">
+            {this.showPercentage(team)}% of votes
+          </span>
+        );
     }
   }
 
   render() {
     return (
       <div>
-        <hr />
+        <br />
         {this.showTeams()}
-        <hr />
+        <br />
         <SingleSillyMeterChart sillyData={this.props.sillyData} />
       </div>
     );
