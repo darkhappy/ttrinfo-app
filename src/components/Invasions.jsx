@@ -8,7 +8,7 @@ class Invasions extends Component {
     // first we need to get the data
     const { invData } = this.props;
 
-    return Object.entries(invData).map(invasion => {
+    return Object.entries(invData).map((invasion) => {
       // variables
       const invDate = timeago.format(new Date(invasion[1].FirstSeen));
       const percent = Math.floor(
@@ -42,7 +42,7 @@ class Invasions extends Component {
         max: invasion[1].MaxProgress,
         percent: percent,
         colour: invColour,
-        megaInv: invasion[1].MegaInvasion
+        megaInv: invasion[1].MegaInvasion,
       };
     });
   }
@@ -65,8 +65,11 @@ class Invasions extends Component {
     }
 
     return this.props.single ? ( // if this is the single page
-      <ul className="list-group list-group-flush small">
-        {data.map(item => (
+      <ul
+        className="list-group list-group-flush"
+        style={{ overflowY: "auto", height: "500px" }}
+      >
+        {data.map((item) => (
           <li key={item.district} className="list-group-item">
             <SingleInvasion item={item} />
           </li>
@@ -74,8 +77,11 @@ class Invasions extends Component {
       </ul>
     ) : (
       // if this is the main page
-      <ul className="list-group list-group-flush small">
-        {data.map(item => (
+      <ul
+        className="list-group list-group-flush"
+        style={{ overflowY: "auto", height: "500px" }}
+      >
+        {data.map((item) => (
           <li key={item.district} className="list-group-item">
             <DashInvasion item={item} />
           </li>
