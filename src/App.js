@@ -15,7 +15,7 @@ class App extends Component {
     sillyData: [],
     lastUpdate: "Updating...",
     mode: "Light",
-    version: "v0.3-dev"
+    version: "v0.3",
   };
 
   loadData = async () => {
@@ -26,29 +26,29 @@ class App extends Component {
 
     // tell the boys that we are updating
     this.setState({
-      lastUpdate: "Updating..."
+      lastUpdate: "Updating...",
     });
 
     // start with population
     await axios({
       method: "get",
-      url: "https://www.toontownrewritten.com/api/population"
-    }).then(resp => {
+      url: "https://www.toontownrewritten.com/api/population",
+    }).then((resp) => {
       popData = resp.data;
     });
 
     // head out to the sillymeter now
     await axios({
       method: "get",
-      url: "https://www.toontownrewritten.com/api/sillymeter"
-    }).then(resp => {
+      url: "https://www.toontownrewritten.com/api/sillymeter",
+    }).then((resp) => {
       sillyData = resp.data;
     });
     // quick stop at the invasions
     await axios({
       method: "get",
-      url: "https://api.toon.plus/invasions/"
-    }).then(resp => {
+      url: "https://api.toon.plus/invasions/",
+    }).then((resp) => {
       invData = resp.data;
     });
 
@@ -60,7 +60,7 @@ class App extends Component {
       invData: invData,
       sillyData: sillyData,
       // also update the current time
-      lastUpdate: "Last updated: " + time.toLocaleTimeString()
+      lastUpdate: "Last updated: " + time.toLocaleTimeString(),
     });
   };
 
