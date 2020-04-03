@@ -59,7 +59,11 @@ class SingleSillyMeter extends Component {
     }
 
     // convert it to a percentage and return
-    return Math.floor((sillyData.rewardPoints[team] / 5000000) * 100);
+    const total =
+      sillyData.rewardPoints[0] +
+      sillyData.rewardPoints[1] +
+      sillyData.rewardPoints[2];
+    return Math.floor((sillyData.rewardPoints[team] / total) * 100);
   }
 
   showBadge(team) {
@@ -72,35 +76,41 @@ class SingleSillyMeter extends Component {
     }
 
     // find the team's reward points
-    const rawPoints = sillyData.rewardPoints[team];
+    // im using percentages because apparently thats the only way for the array to be normal
+    const rawPoints = this.showPercentage(team);
     console.log(team + "'s raw points is " + rawPoints);
 
     // return it's position
-    const sortedArray = [...sillyData.rewardPoints].sort().reverse();
+    const sortedArray = [
+      this.showPercentage(0),
+      this.showPercentage(1),
+      this.showPercentage(2),
+    ]
+      .sort()
+      .reverse();
+    console.log(sortedArray);
 
-    switch (
-      sortedArray.findIndex(item => item === rawPoints) + 1 // we add one because i like reading properly
-    ) {
-      case 1: // 1st place
+    switch (sortedArray.findIndex((item) => item === rawPoints)) {
+      case 0: // 1st place
         return (
-          <span className="btn btn-success btn-lg">
+          <button className="btn btn-success">
             {this.showPercentage(team)}% of votes
-          </span>
+          </button>
         );
 
-      case 2: // 2nd place
+      case 1: // 2nd place
         return (
-          <span className="btn btn-warning btn-sm">
+          <button className="btn btn-warning">
             {this.showPercentage(team)}% of votes
-          </span>
+          </button>
         );
 
       default:
         // loser lol
         return (
-          <span className="btn btn-danger btn-sm">
+          <button className="btn btn-danger">
             {this.showPercentage(team)}% of votes
-          </span>
+          </button>
         );
     }
   }
