@@ -8,43 +8,47 @@ class Invasions extends Component {
     // first we need to get the data
     const { invData } = this.props;
 
-    return Object.entries(invData).map((invasion) => {
-      // variables
-      const invDate = timeago.format(new Date(invasion[1].FirstSeen));
-      const percent = Math.floor(
-        (invasion[1].CurrentProgress / invasion[1].MaxProgress) * 100
-      );
+    return Object.entries(invData)
+      .map((invasion) => {
+        // variables
+        const invDate = timeago.format(new Date(invasion[1].FirstSeen));
+        const percent = Math.floor(
+          (invasion[1].CurrentProgress / invasion[1].MaxProgress) * 100
+        );
 
-      let invColour;
-      if (percent >= 90) {
-        // 90-100% done
-        invColour = "#ff5722";
-      } else if (percent >= 90) {
-        // 75-90% done
-        invColour = "#ff9800";
-      } else if (percent >= 50) {
-        // 50-75% done
-        invColour = "#ffc107";
-      } else {
-        // 0-50% done
-        invColour = "#4caf50";
-      }
+        let invColour;
+        if (percent >= 90) {
+          // 90-100% done
+          invColour = "#ff5722";
+        } else if (percent >= 90) {
+          // 75-90% done
+          invColour = "#ff9800";
+        } else if (percent >= 50) {
+          // 50-75% done
+          invColour = "#ffc107";
+        } else {
+          // 0-50% done
+          invColour = "#4caf50";
+        }
 
-      const invCog = invasion[1].Type.replace(/[^-.()0-9a-z& ]/gi, "");
-      const eta = timeago.format(new Date(invasion[1].EstimatedCompletion));
+        const invCog = invasion[1].Type.replace(/[^-.()0-9a-z& ]/gi, "");
+        const eta = timeago.format(new Date(invasion[1].EstimatedCompletion));
 
-      return {
-        district: invasion[1].District,
-        cog: invCog,
-        started: invDate,
-        eta: eta,
-        progress: invasion[1].CurrentProgress,
-        max: invasion[1].MaxProgress,
-        percent: percent,
-        colour: invColour,
-        megaInv: invasion[1].MegaInvasion,
-      };
-    });
+        return {
+          district: invasion[1].District,
+          cog: invCog,
+          started: invDate,
+          eta: eta,
+          progress: invasion[1].CurrentProgress,
+          max: invasion[1].MaxProgress,
+          percent: percent,
+          colour: invColour,
+          megaInv: invasion[1].MegaInvasion,
+        };
+      })
+      .sort((a, b) => {
+        return a.percent - b.percent;
+      });
   }
 
   showInvasions() {
