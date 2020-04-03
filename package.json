@@ -1,6 +1,6 @@
 {
   "name": "ttrinfo-app",
-  "version": "0.3",
+  "version": "0.3.0",
   "description": "Toontown Rewritten Dashboard",
   "author": "darkhappy",
   "main": "public/electron.js",
