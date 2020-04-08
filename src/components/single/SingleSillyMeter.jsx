@@ -63,7 +63,7 @@ class SingleSillyMeter extends Component {
       sillyData.rewardPoints[0] +
       sillyData.rewardPoints[1] +
       sillyData.rewardPoints[2];
-    return Math.floor((sillyData.rewardPoints[team] / total) * 100);
+    return Math.round((sillyData.rewardPoints[team] / total) * 100);
   }
 
   showBadge(team) {

@@ -52,7 +52,7 @@ class DashSillyMeter extends Component {
 
     // find the winner's description
     let winnerKey = sillyData.rewards.findIndex(
-      item => item === sillyData.winner
+      (item) => item === sillyData.winner
     );
 
     return (
@@ -71,12 +71,17 @@ class DashSillyMeter extends Component {
 
     // find the winner's percentage
     let winnerKey = sillyData.rewards.findIndex(
-      item => item === sillyData.winner
+      (item) => item === sillyData.winner
     );
 
     // convert it to a percentage
-    const percent = Math.floor(
-      (sillyData.rewardPoints[winnerKey] / 5000000) * 100
+    // convert it to a percentage and return
+    const total =
+      sillyData.rewardPoints[0] +
+      sillyData.rewardPoints[1] +
+      sillyData.rewardPoints[2];
+    const percent = Math.round(
+      (sillyData.rewardPoints[winnerKey] / total) * 100
     );
 
     // format it and return
